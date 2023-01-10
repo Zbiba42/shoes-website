@@ -1,0 +1,87 @@
+.background{
+    
+    width: 100%;
+    height: 100%;
+    background-color: rgba(61, 61, 61, 0.4);  
+    backdrop-filter: blur(2px);
+    transition: 0.3s;
+    position: relative;
+    z-index: 4;
+}
+.form-Container{
+    position: absolute;
+    border-radius: 8px;
+    left: 32.2%;
+    
+    height: 75%;
+    width: 35%;
+    bottom: -80%;
+    border: 1px solid rgb(189, 189, 189) ;
+    background-color: white;
+    transition: 0.7s ease;
+    padding-top: 20px;
+
+}
+
+.exit{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: none;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.logIn-Container{
+    width: 80%;
+    height: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+
+.logIn-Container > h2,.logIn-Container > p,.logIn-Container > h4{
+    margin: 10px;
+}
+
+.logIn-Container > input{
+    margin-left: 10px;
+    width: 100%;
+    height: 40px;
+    background-color: none;
+    border: rgb(184, 184, 184) 1px solid ;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: 700;
+    padding-left: 10px;
+}
+input:focus{
+    outline: none;
+}
+.Sign-btn{
+    width: 100%;
+    height: 40px;
+    margin: 10px 10px 0px 10px ;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: linear-gradient(to right, hsl(357deg 75% 47%), hsl(309deg 50% 26%));
+    color: white;
+    cursor: pointer;
+}
+
+.noAcc{
+    font-size:medium;
+    margin-top: 20px;
+    margin-left: calc(100%/5.5) ;
+    
+
+}
+.signUp-link{
+    font-weight: 900;
+    color:  hsl(309deg 50% 26%);
+    cursor: pointer;
+}

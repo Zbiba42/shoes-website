@@ -1,0 +1,96 @@
+/* *{
+    outline: 1px solid grey;
+    
+} */
+.sideBar{
+    width: 15%;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+.logoContainer{
+    width: 100%;
+    height: 90px;
+    padding-left: calc(100% /7);
+    padding-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.logoContainer h5{
+    position: absolute;
+    top: calc(100% / 2.7);
+    right: 50px;
+    color: rgb(148, 148, 148);
+}
+.logo{
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+.explore{
+    padding-left: 30px;
+    margin-bottom: 25px;
+}
+
+.link{
+    height: 50px;
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+    position: relative;
+}
+.link a{
+    text-decoration: none;
+    color: rgb(110, 110, 110);
+    font-size: 1.1rem;
+    transition: 0.3s;
+    font-weight: 900;
+
+}
+.link .fa-chevron-right{
+    margin-top: 5px;
+    position: absolute;
+    right: 20px;
+    font-size: 0.7rem;
+    color: white;
+}
+.link i{
+    margin-right: 10px;
+}
+.coloredLink{
+    background: linear-gradient(to right, hsl(357deg 75% 47%), hsl(309deg 50% 26%));
+    margin-bottom: 10px;
+}
+.coloredLink a{
+    color: rgb(230, 230, 230);
+}
+.coloredLink a i{
+    margin-right: 15px;
+    color: rgb(230, 230, 230);
+}
+
+.normal:hover a{
+    font-size: 1.2rem;
+    color: black;
+    font-weight: 900;
+    
+}
+
+.foot{
+    border-top: 1px solid rgb(190, 190, 190);
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+}
+
+.link .fa-user-pen{
+    font-size: 0.9rem;
+    margin: 10px;
+}
+.fa-gear{ 
+    font-size: 0.95rem;
+    margin: 10px;
+}

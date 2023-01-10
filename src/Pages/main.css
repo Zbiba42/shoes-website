@@ -1,0 +1,44 @@
+.banner{
+    float: left;
+    width: 525px;
+    height: 200px;
+    outline: 1px solid grey;
+    margin: 10px 20px;
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+.banner2{
+    float: left;
+    width: 570px;
+    height: 200px;
+    outline: 1px solid grey;
+    margin: 10px 0 20px 0px;
+    position: relative;
+    z-index: 1;
+    
+    background-size:cover;
+    
+    background-repeat: no-repeat;
+}
+.container{
+   
+    float: left;
+    width: 85%;
+    height: auto;
+    padding: 10px 0 20px 20px;
+    
+}
+.cards{
+    width: 100%;
+    margin: 20px 0 0;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container h2{
+   
+    font-weight:300;
+}
+.container span{
+    font-weight: 900;
+}

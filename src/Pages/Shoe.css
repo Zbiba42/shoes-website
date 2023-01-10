@@ -1,0 +1,130 @@
+.shoeContainer{
+    
+    float: left;
+    width: 85%;
+    height: calc(100% - 80px);
+    padding: 20px 0 20px 20px;
+   
+}
+
+.imgContainer{
+    width: 50%;
+    height: 100%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
+
+img{
+    width: 75%;
+    height: auto;
+    
+    
+}
+
+.infoContainer{
+    width: calc(45% - 20px);
+    height: 100%;
+    float: left;
+    padding: 20px 0 30px 50px;
+    padding-top: 80px;
+}
+
+.Shoecategory{
+    margin: 10px;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+.ShoeName{
+    margin: 10px;
+    font-weight: 900;
+    font-size: 2.5rem;
+}
+
+.ShoePrice{
+    margin-left: 10px;
+    float: left;
+    font-weight: 900;
+    color: rgb(12, 11, 11);
+}
+
+.ShoeLeft{
+    float: left;
+    margin-left: 30px;
+    color: rgb(158, 157, 157);
+    
+}
+.SelectSize{
+    clear: both;
+    margin: 10px;
+    margin-top: 50px;
+}
+.SizeSelection{
+    margin-top: 10px;
+    margin-left: 10px;
+    clear: both;
+    width: calc(100% - 60px);
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.size{
+   
+    width: 30%;
+    height: 45px;
+    margin: 0 1.5%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 2px rgb(58, 58, 58);
+}
+.size:hover{
+    background-color: black;
+    color: white;
+}
+
+.buttonsContainer{
+    margin-top: 20px;
+    margin-left: 10px;
+  
+    width: calc(100% - 60px);
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.button{
+    width: 40%;
+    height: 45px;
+    margin: 0 5%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 2px rgb(58, 58, 58);
+}
+.button:hover{
+    background-color: black;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.add{
+    clear: both;
+}

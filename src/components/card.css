@@ -1,0 +1,28 @@
+.card{
+    width: 18.24%;
+    height: 280px;
+    cursor: pointer;
+    outline: 1px solid rgb(204, 204, 204);
+    margin-right: 20px;
+    padding: 10px;
+    position: relative;
+   
+}
+.card:hover{
+    outline: 1px solid #000F08;
+
+}
+.image{
+    width: 100%;
+    height:70%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.title{
+    margin-top: 10px;
+}
+.price{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
