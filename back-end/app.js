@@ -228,7 +228,7 @@ const store = require('./store')
 const storageEngine = multer.diskStorage({
     destination:(req,file,cb)=>{
         
-        cb(null,"../src/uploads")
+        cb(null,"../public/uploads")
     },
     filename: (req,file,cb)=>{
        
@@ -238,7 +238,7 @@ const storageEngine = multer.diskStorage({
 const upload = multer({storage:storageEngine});
 
 const addImageAfterUpload = async (file)=>{
-  await Store.updateOne(await Store.findOne().sort({ _id: -1 }) , {image : `../src/uploads/${file}` })
+  await Store.updateOne(await Store.findOne().sort({ _id: -1 }) , {image : `./uploads/${file}` })
 }
 
 app.post('/upload', upload.single('image'), (req, res) => {

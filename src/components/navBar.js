@@ -12,12 +12,17 @@ const NavBar = () => {
   const [height, setHeight] = useState('-140px')
   const { isLoggedIn } = useContext(LoggedIn)
   const { token } = useContext(Token)
- 
-  let store 
-  if(token!=null){
-    const {Store} = jwt_decode(token)
+  let image = 'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
+  let store
+  if (token != null) {
+    const { Store } = jwt_decode(token)
     store = Store
     console.log(store)
+    if(store !=null){
+
+      image = store.image
+      console.log(image)
+    }
   }
 
   const getCategories = async () => {
@@ -68,23 +73,22 @@ const NavBar = () => {
         <div
           className="profile"
           style={{
-            backgroundImage:
-              'url(./images/314553714_415021834006234_4264250033766412950_n.jpg)',
+            backgroundImage: `url(${image})`,
           }}
         ></div>
         <i className="fa-solid fa-angle-down" onClick={toggle}></i>
       </div>
-        {isLoggedIn && (
-          <div className="profileDropDown" style={{ top : height}}>
-            <Link to="/">Account Infos</Link>
-            {(store == null ) ? (
-              <Link to="/createStore">Create Store</Link>
-            ) : (
-              <Link to="/Store">Store</Link>
-            )}
-            <Link to="/">Account Infos</Link>
-          </div>
-        )}
+      {isLoggedIn && (
+        <div className="profileDropDown" style={{ top: height }}>
+          <Link to="/">Account Infos</Link>
+          {store == null ? (
+            <Link to="/createStore">Create Store</Link>
+          ) : (
+            <Link to="/Store">Store</Link>
+          )}
+          <Link to="/">Account Infos</Link>
+        </div>
+      )}
     </>
   )
 }
