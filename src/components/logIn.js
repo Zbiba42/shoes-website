@@ -26,6 +26,7 @@ export default function LogIn() {
       
       if (response.data.succes) {
         setToken(response.data.data)
+        console.log(response.data.data)
         setisLoggedIn(true)
         setEffect('-80%')
         setTimeout(() => {

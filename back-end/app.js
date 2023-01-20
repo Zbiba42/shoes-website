@@ -158,6 +158,7 @@ app.post('/SignUp', async (req, res) => {
       Fullname: req.body.Fullname,
       Email: req.body.Email,
       Password: HashedPass,
+      Cart: [],
     }
     await User.create(user)
     res.status(200).json({ succes: true, data: user })
@@ -180,9 +181,9 @@ app.post('/LogIn', async (req, res) => {
       // res.status(200).json({ succes: true, data: 'user logged in' })
 
       //// authorisation
-      const { _id, Fullname } = await User.findOne({ Email: req.body.Email })
+      const { _id, Fullname, Cart } = await User.findOne({Email: req.body.Email,})
       const store = await Store.findOne({ ownerId: _id })
-      const user = { id: _id, Fullname: Fullname, Store: store }
+      const user = { id: _id, Fullname: Fullname, Store: store, Cart: Cart }
       const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET)
       res.status(200).json({ succes: true, data: accesToken })
     } else {
@@ -223,29 +224,27 @@ function authToken(req, res, next) {
   })
 }
 
-const multer = require("multer");
+const multer = require('multer')
 const store = require('./store')
 const storageEngine = multer.diskStorage({
-    destination:(req,file,cb)=>{
-        
-        cb(null,"../public/uploads")
-    },
-    filename: (req,file,cb)=>{
-       
-        cb(null,file.originalname);
-    }
-});
-const upload = multer({storage:storageEngine});
+  destination: (req, file, cb) => {
+    cb(null, '../public/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  },
+})
+const upload = multer({ storage: storageEngine })
 
-const addImageAfterUpload = async (file)=>{
-  await Store.updateOne(await Store.findOne().sort({ _id: -1 }) , {image : `./uploads/${file}` })
+const addImageAfterUpload = async (file) => {
+  await Store.updateOne(await Store.findOne().sort({ _id: -1 }), {
+    image: `./uploads/${file}`,
+  })
 }
 
 app.post('/upload', upload.single('image'), (req, res) => {
-  
   addImageAfterUpload(req.file.filename)
-  res.send("Image downloaded succesfuly!");
-
+  res.send('Image downloaded succesfuly!')
 })
 
 app.listen(5000, () => {

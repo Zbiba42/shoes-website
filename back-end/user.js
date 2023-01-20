@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema({
     required: 'Password is required',
     min: [6, 'Password must be at least 6 characters'],
   },
+  Cart : { 
+    type : Array,
+  }
 })
 
 module.exports = mongoose.model('User', UserSchema)
