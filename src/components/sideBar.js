@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import './sideBar.css'
-import { Click, LoggedIn } from '../App'
-
+import { Click } from '../App'
+import {Main} from '../Pages/main'
 const SideBar = () => {
   const setFormClicked = useContext(Click)
-  const { isLoggedIn } = useContext(LoggedIn)
-  console.log(isLoggedIn)
+  const token = sessionStorage.getItem('AccesToken')
+  
+  
   return (
     <>
       <div className="sideBar">
@@ -53,12 +54,16 @@ const SideBar = () => {
           </div>
 
           <div className="foot">
-            {isLoggedIn ? (
+            {token ? (
               <div className="link">
-                <Link to={'/account'}
-                  
+                <Link 
+                  onClick={()=>{
+                    sessionStorage.removeItem('AccesToken')
+                    sessionStorage.removeItem('RefreshToken')
+                    Navigate({to:'/'})
+                  }}
                 >
-                  <i className="fa-solid fa-user-pen"></i>Account
+                  <i className="fas fa-sign-out-alt"></i>Logout
                 </Link>
               </div>
             ) : (
@@ -68,7 +73,7 @@ const SideBar = () => {
                     setFormClicked(true)
                   }}
                 >
-                  <i className="fa-solid fa-user-pen"></i>Log in
+                  <i className="fas fa-sign-in-alt"></i>Log in
                 </Link>
               </div>
             )}

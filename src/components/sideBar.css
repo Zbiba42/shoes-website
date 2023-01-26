@@ -86,9 +86,10 @@
     bottom: 20px;
 }
 
-.link .fa-user-pen{
-    font-size: 0.9rem;
+.fa-sign-in-alt , .fa-sign-out-alt{
+    font-size: 0.98rem;
     margin: 10px;
+    
 }
 .fa-gear{ 
     font-size: 0.95rem;

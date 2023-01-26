@@ -4,24 +4,25 @@ import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
 import './navBar.css'
-import { LoggedIn } from '../App'
-import { Token } from '../App'
+
+
 const NavBar = () => {
   const [categories, setCategories] = useState([])
   const [cartCount, setCatCount] = useState(0)
   const [height, setHeight] = useState('-140px')
-  const { isLoggedIn } = useContext(LoggedIn)
-  const { token } = useContext(Token)
+  
+  
+  const token = sessionStorage.getItem('AccesToken')
   let image = 'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
   let store
   if (token != null) {
     const { Store } = jwt_decode(token)
     store = Store
-    console.log(store)
+    
     if(store !=null){
 
       image = store.image
-      console.log(image)
+      
     }
   }
 
@@ -78,7 +79,7 @@ const NavBar = () => {
         ></div>
         <i className="fa-solid fa-angle-down" onClick={toggle}></i>
       </div>
-      {isLoggedIn && (
+      {token && (
         <div className="profileDropDown" style={{ top: height }}>
           <Link to="/">Account Infos</Link>
           {store == null ? (

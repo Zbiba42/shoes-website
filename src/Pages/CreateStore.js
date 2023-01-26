@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { Token } from '../App'
+
 import './CreateStore.css'
 export default function CreateStore() {
-  const { token } = useContext(Token)
-
+  
   const storeName = useRef(null)
   const description = useRef(null)
   const image = useRef(null)
-
+  
+  const token = sessionStorage.getItem('AccesToken')
   if (token == null) {
     return <div>{token ? '' : <Navigate to="/" />}</div>
   }

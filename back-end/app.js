@@ -150,6 +150,60 @@ require('dotenv').config()
 mongoose.connect('mongodb://127.0.0.1:27017/ShoesWebsite', async () => {
   console.log('conected')
 })
+// men b3d andirha db
+let refreshTokens = []
+
+app.post('/refresh', (req, res) => {
+  const refreshToken = req.body.token
+  if (!refreshToken)
+    return res
+      .status(401)
+      .json({ succes: false, error: 'you are not authenticated !' })
+  if (!refreshTokens.includes(refreshToken)) {
+    return res
+      .status(403)
+      .json({ succes: false, error: 'refreshToken is invalid !' })
+  }
+  
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    
+    err && console.log(err)
+    refreshTokens = refreshTokens.filter((token) => {
+      if (token != refreshToken) {
+        return token
+      }
+    })
+   
+    const newAccesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
+      expiresIn: '30m',
+    })
+    const newRefreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+
+    refreshTokens.push(newRefreshToken)
+
+    res.status(200).json({
+      succes: true,
+      data: {
+        accessToken: newAccesToken,
+        refreshToken: newRefreshToken,
+      },
+    })
+  })
+})
+
+app.get('/testings', authToken , (req,res)=>{
+  res.status(200).json({succes:true , data : 'U HAVE ACCES UWU'})
+})
+
+app.post('/logout', authToken , (req,res)=>{
+  const refreshToken = req.body.token
+  refreshTokens = refreshTokens.filter((token) => {
+    if (token != refreshToken) {
+      return token
+    }
+  })
+  res.status(200).json({ succes: false, data: 'you logged out succesfully!  ' })
+})
 
 app.post('/SignUp', async (req, res) => {
   try {
@@ -181,11 +235,25 @@ app.post('/LogIn', async (req, res) => {
       // res.status(200).json({ succes: true, data: 'user logged in' })
 
       //// authorisation
-      const { _id, Fullname, Cart } = await User.findOne({Email: req.body.Email,})
+      const { _id, Fullname, Cart } = await User.findOne({
+        Email: req.body.Email,
+      })
       const store = await Store.findOne({ ownerId: _id })
       const user = { id: _id, Fullname: Fullname, Store: store, Cart: Cart }
-      const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET)
-      res.status(200).json({ succes: true, data: accesToken })
+     
+      const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
+        expiresIn: '30m',
+      })
+      const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+      refreshTokens.push(refreshToken)
+
+      res.status(200).json({
+        succes: true,
+        data: {
+          accesToken: accesToken,
+          refreshToken: refreshToken,
+        },
+      })
     } else {
       res.status(400).json({ succes: false, error: 'uncorrect password' })
     }
@@ -193,6 +261,8 @@ app.post('/LogIn', async (req, res) => {
     res.send(error)
   }
 })
+
+
 
 app.post('/createStore', authToken, async (req, res) => {
   try {
@@ -206,7 +276,7 @@ app.post('/createStore', authToken, async (req, res) => {
     await Store.create(store)
     res.status(200).json({ succes: true, data: store })
   } catch (error) {
-    res.status(400).json({ succes: false, error: error.message })
+    res.status(401).json({ succes: false, error: error.message })
   }
 })
 
@@ -217,7 +287,7 @@ function authToken(req, res, next) {
   if (token == null) return res.send('token is null')
 
   jwt.verify(token, process.env.ACCES_TOKEN_SECRET, (err, payload) => {
-    if (err) return res.send(err)
+    if (err) return res.status(401).json({ succes: false, error: err })
 
     req.payload = payload
     next()

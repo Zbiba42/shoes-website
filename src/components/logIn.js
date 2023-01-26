@@ -1,15 +1,14 @@
 import React, { useContext, useRef  } from 'react'
 import { loginToggleContext } from './Form'
 import axios from 'axios'
-import { Click, LoggedIn , Token } from '../App'
+import { Click } from '../App'
 
 
 
 export default function LogIn() {
   const { setsignIn, setSignUp, setEffect } = useContext(loginToggleContext)
   const setFormClicked = useContext(Click)
-  const {setisLoggedIn} = useContext(LoggedIn)
-  const {setToken} = useContext(Token)
+
   
   
   const Email = useRef(null)
@@ -25,9 +24,10 @@ export default function LogIn() {
       const response = await axios.post('http://localhost:5000/LogIn', user)
       
       if (response.data.succes) {
-        setToken(response.data.data)
-        console.log(response.data.data)
-        setisLoggedIn(true)
+        sessionStorage.setItem('AccesToken',response.data.data.accesToken)
+        sessionStorage.setItem('RefreshToken',response.data.data.refreshToken)
+      
+       
         setEffect('-80%')
         setTimeout(() => {
           setFormClicked(false)
@@ -46,16 +46,14 @@ export default function LogIn() {
         <h4>Email</h4>
         <input
           type="email"
-          name=""
-          id=""
+         
           placeholder="Enter your Email"
           ref={Email}
         />
         <h4>Password</h4>
         <input
           type="password"
-          name=""
-          id=""
+          
           placeholder="Enter your Password"
           ref={Password}
         />
