@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { loginToggleContext } from './Form'
 import axios from 'axios'
 

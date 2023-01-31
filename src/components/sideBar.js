@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import './sideBar.css'
 import { Click } from '../App'
-import {Main} from '../Pages/main'
+
 const SideBar = () => {
   const setFormClicked = useContext(Click)
   const token = sessionStorage.getItem('AccesToken')

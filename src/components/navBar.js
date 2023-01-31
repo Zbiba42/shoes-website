@@ -1,29 +1,28 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
 import './navBar.css'
 
-
 const NavBar = () => {
   const [categories, setCategories] = useState([])
-  const [cartCount, setCatCount] = useState(0)
+  // const [Cart, setCart] = useState()
   const [height, setHeight] = useState('-140px')
-  
-  
+
   const token = sessionStorage.getItem('AccesToken')
-  let image = 'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
+  let image =
+    'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
   let store
+  let CartLenght = 0
   if (token != null) {
     console.log(jwt_decode(token))
+    CartLenght = jwt_decode(token).Cart.length
+    
     const { Store } = jwt_decode(token)
     store = Store
-    
-    if(store !=null){
-
+    if (store != null) {
       image = store.image
-      
     }
   }
 
@@ -42,6 +41,7 @@ const NavBar = () => {
   useEffect(() => {
     getCategories()
   }, [])
+  useEffect(() => {})
   return (
     <>
       <div className="navBar">
@@ -70,7 +70,7 @@ const NavBar = () => {
           <i className="fa-regular fa-bell"></i>
           <i className="fa-regular fa-heart"></i>
           <i className="fa-solid fa-bag-shopping"></i>
-          <p>{cartCount}</p>
+          <p>{CartLenght}</p>
         </div>
         <div
           className="profile"
@@ -82,13 +82,21 @@ const NavBar = () => {
       </div>
       {token && (
         <div className="profileDropDown" style={{ top: height }}>
-          <Link to="/" onClick={toggle}>Account Infos</Link>
+          <Link to="/" onClick={toggle}>
+            Account Infos
+          </Link>
           {store == null ? (
-            <Link to="/createStore" onClick={toggle}>Create Store</Link>
+            <Link to="/createStore" onClick={toggle}>
+              Create Store
+            </Link>
           ) : (
-            <Link to="/Store" onClick={toggle}>Store</Link>
+            <Link to="/Store" onClick={toggle}>
+              Store
+            </Link>
           )}
-          <Link to="/" onClick={toggle}>Account Infos</Link>
+          <Link to="/" onClick={toggle}>
+            Account Infos
+          </Link>
         </div>
       )}
     </>

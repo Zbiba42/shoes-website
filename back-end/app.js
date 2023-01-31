@@ -280,7 +280,18 @@ app.post('/createStore', authToken, async (req, res) => {
 
     res.status(200).json({ succes: true, data: Storee })
   } catch (error) {
-    res.status(401).json({ succes: false, error: error.message })
+    res.status(400).json({ succes: false, error: error.message })
+  }
+})
+
+app.post('/addToCart', authToken, async (req, res) => {
+  try {
+    const id = req.body.id
+    const item = req.body.item
+    const Cart = await User.updateOne({ _id: id }, { $push: { Cart: item } })
+    res.status(200).json({ succes: true, data: Cart })
+  } catch (error) {
+    res.status(400).json({ succes: false, data: error.message })
   }
 })
 
@@ -309,22 +320,6 @@ const storageEngine = multer.diskStorage({
   },
 })
 const upload = multer({ storage: storageEngine })
-
-// const addImageAfterUpload = async (file,email) => {
-//   await Store.updateOne(await Store.findOne().sort({ _id: -1 }), {
-//     image: `./uploads/${file}`,
-//   })
-//   const Storeee = await Store.findOne().sort({ _id: -1 })
-//   const { _id, Fullname, Cart,Email } = await User.findOne({
-//     Email: email,
-//   })
-
-//   const user = { id: _id, Fullname: Fullname, Store: Storeee, Cart: Cart , Email : Email }
-
-//   const accestoken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
-//     expiresIn: '30m',
-//   })
-// }
 
 app.post('/upload', upload.single('image'), async (req, res) => {
   await Store.updateOne(await Store.findOne().sort({ _id: -1 }), {

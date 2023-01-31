@@ -1,7 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+
 import './Shoe.css'
+import { toast } from 'react-toastify'
 
 const Shoe = () => {
   const { name } = useParams()
@@ -10,7 +13,24 @@ const Shoe = () => {
     const { data } = await axios.get(`http://localhost:5000/shoes/${name}`)
     setShoeData(data.data)
   }
-
+  const addToCart = async () => {
+    const token = sessionStorage.getItem('AccesToken')
+    const { id } = jwt_decode(token)
+    const response = await axios.post(
+      'http://localhost:5000/addToCart',
+      { id: id, item: shoeData },
+      {
+        headers: {
+          authorization: 'Bearer ' + token,
+        },
+      }
+    )
+    if(response.status === 200){
+      toast.success('Item added to cart successfully !',{
+        position: toast.POSITION.TOP_CENTER,
+      })
+    }
+  }
   useEffect(() => {
     getShoe()
   }, [])
@@ -43,15 +63,15 @@ const Shoe = () => {
               </div>
             </div>
             <div className="buttonsContainer">
-              <div className="button">
+              <div className="button" onClick={addToCart}>
                 <h4>
-                  Add to Cart <i class="fa-solid fa-cart-shopping"></i>
+                  Add to Cart <i className="fa-solid fa-cart-shopping"></i>
                 </h4>
               </div>
 
               <div className="button">
                 <h4>
-                  Favorite <i class="fa-solid fa-heart"></i>
+                  Favorite <i className="fa-solid fa-heart"></i>
                 </h4>
               </div>
             </div>
