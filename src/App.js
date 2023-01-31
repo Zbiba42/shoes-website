@@ -18,38 +18,38 @@ export const Click = createContext(null)
 export default function App() {
   const [formClicked, setFormClicked] = useState(false)
 
-  axios.interceptors.request.use((config) => {
-    const token = sessionStorage.getItem('AccesToken')
-    config.headers['Authorization'] = `Bearer ${token}`
-    return config
-  })
-  axios.interceptors.response.use(
-    (res) => {
-      return res
-    },
-    (err) => {
-      if (err.response) {
-        console.log(err)
-        if (err.response.status !== 401) {
-          return Promise.reject(err)
-        }
+  // axios.interceptors.request.use((config) => {
+  //   const token = sessionStorage.getItem('AccesToken')
+  //   config.headers['Authorization'] = `Bearer ${token}`
+  //   return config
+  // })
+  // axios.interceptors.response.use(
+  //   (res) => {
+  //     return res
+  //   },
+  //   (err) => {
+  //     if (err.response) {
+  //       console.log(err)
+  //       if (err.response.status !== 401) {
+  //         return Promise.reject(err)
+  //       }
 
-        const refreshToken = sessionStorage.getItem('RefreshToken')
-        return axios
-          .post('http://localhost:5000/refresh', { token: refreshToken })
-          .then((data) => {
-            const { refreshToken, accessToken } = data.data.data
-            console.log(accessToken + ' ' + refreshToken)
-            sessionStorage.setItem('AccesToken', accessToken)
-            sessionStorage.setItem('RefreshToken', refreshToken)
-            console.log('dkchi trefresha')
+  //       const refreshToken = sessionStorage.getItem('RefreshToken')
+  //       return axios
+  //         .post('http://localhost:5000/refresh', { token: refreshToken })
+  //         .then((data) => {
+  //           const { refreshToken, accessToken } = data.data.data
+  //           console.log(accessToken + ' ' + refreshToken)
+  //           sessionStorage.setItem('AccesToken', accessToken)
+  //           sessionStorage.setItem('RefreshToken', refreshToken)
+  //           console.log('dkchi trefresha')
 
-            err.config.headers['Authorization'] = 'Bearer ' + accessToken
-            return axios(err.config)
-          })
-      }
-    }
-  )
+  //           err.config.headers['Authorization'] = 'Bearer ' + accessToken
+  //           return axios(err.config)
+  //         })
+  //     }
+  //   }
+  // )
   useEffect(() => {
     console.log('render')
   })

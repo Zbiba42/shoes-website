@@ -16,6 +16,7 @@ const NavBar = () => {
   let image = 'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
   let store
   if (token != null) {
+    console.log(jwt_decode(token))
     const { Store } = jwt_decode(token)
     store = Store
     
@@ -81,13 +82,13 @@ const NavBar = () => {
       </div>
       {token && (
         <div className="profileDropDown" style={{ top: height }}>
-          <Link to="/">Account Infos</Link>
+          <Link to="/" onClick={toggle}>Account Infos</Link>
           {store == null ? (
-            <Link to="/createStore">Create Store</Link>
+            <Link to="/createStore" onClick={toggle}>Create Store</Link>
           ) : (
-            <Link to="/Store">Store</Link>
+            <Link to="/Store" onClick={toggle}>Store</Link>
           )}
-          <Link to="/">Account Infos</Link>
+          <Link to="/" onClick={toggle}>Account Infos</Link>
         </div>
       )}
     </>
