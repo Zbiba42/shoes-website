@@ -164,16 +164,15 @@ app.post('/refresh', (req, res) => {
       .status(403)
       .json({ succes: false, error: 'refreshToken is invalid !' })
   }
-  
+
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    
     err && console.log(err)
     refreshTokens = refreshTokens.filter((token) => {
       if (token != refreshToken) {
         return token
       }
     })
-   
+
     const newAccesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
       expiresIn: '30m',
     })
@@ -191,11 +190,11 @@ app.post('/refresh', (req, res) => {
   })
 })
 
-app.get('/testings', authToken , (req,res)=>{
-  res.status(200).json({succes:true , data : 'U HAVE ACCES UWU'})
+app.get('/testings', authToken, (req, res) => {
+  res.status(200).json({ succes: true, data: 'U HAVE ACCES UWU' })
 })
 
-app.post('/logout', authToken , (req,res)=>{
+app.post('/logout', authToken, (req, res) => {
   const refreshToken = req.body.token
   refreshTokens = refreshTokens.filter((token) => {
     if (token != refreshToken) {
@@ -235,12 +234,18 @@ app.post('/LogIn', async (req, res) => {
       // res.status(200).json({ succes: true, data: 'user logged in' })
 
       //// authorisation
-      const { _id, Fullname, Cart,Email } = await User.findOne({
+      const { _id, Fullname, Cart, Email } = await User.findOne({
         Email: req.body.Email,
       })
       const store = await Store.findOne({ ownerId: _id })
-      const user = { id: _id, Fullname: Fullname, Store: store, Cart: Cart , Email : Email }
-     
+      const user = {
+        id: _id,
+        Fullname: Fullname,
+        Store: store,
+        Cart: Cart,
+        Email: Email,
+      }
+
       const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
         expiresIn: '30m',
       })
@@ -262,8 +267,6 @@ app.post('/LogIn', async (req, res) => {
   }
 })
 
-
-
 app.post('/createStore', authToken, async (req, res) => {
   try {
     const store = {
@@ -274,17 +277,8 @@ app.post('/createStore', authToken, async (req, res) => {
       products: [],
     }
     const Storee = await Store.create(store)
-    
-    const { _id, Fullname, Cart,Email } = await User.findOne({
-      Email: req.body.Email,
-    })
-    
-    const user = { id: _id, Fullname: Fullname, Store: Storee, Cart: Cart , Email : Email }
-    
-    const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
-      expiresIn: '30m',
-    })
-    res.status(200).json({ succes: true, data: {accesToken : accesToken} })
+
+    res.status(200).json({ succes: true, data: Storee })
   } catch (error) {
     res.status(401).json({ succes: false, error: error.message })
   }
@@ -324,9 +318,9 @@ const upload = multer({ storage: storageEngine })
 //   const { _id, Fullname, Cart,Email } = await User.findOne({
 //     Email: email,
 //   })
-  
+
 //   const user = { id: _id, Fullname: Fullname, Store: Storeee, Cart: Cart , Email : Email }
-  
+
 //   const accestoken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
 //     expiresIn: '30m',
 //   })
@@ -337,17 +331,23 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     image: `./uploads/${req.file.filename}`,
   })
   const Storeee = await Store.findOne().sort({ _id: -1 })
-  const { _id, Fullname, Cart,Email } = await User.findOne({
+  const { _id, Fullname, Cart, Email } = await User.findOne({
     Email: req.body.Email,
   })
-  
-  const user = { id: _id, Fullname: Fullname, Store: Storeee, Cart: Cart , Email : Email }
-  
+
+  const user = {
+    id: _id,
+    Fullname: Fullname,
+    Store: Storeee,
+    Cart: Cart,
+    Email: Email,
+  }
+
   const accestoken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
     expiresIn: '30m',
   })
- 
- res.status(200).json({ succes: true, data: {accesToken : accestoken} })
+
+  res.status(200).json({ succes: true, data: { accesToken: accestoken } })
 })
 
 app.listen(5000, () => {

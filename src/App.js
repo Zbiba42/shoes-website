@@ -10,6 +10,8 @@ import NavBar from './components/navBar'
 import Form from './components/Form'
 import CreateStore from './Pages/CreateStore'
 import axios from 'axios'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Testing } from './Pages/testing'
 import { Store } from './Pages/Store'
 
@@ -58,19 +60,18 @@ export default function App() {
     <>
       <BrowserRouter>
         <Click.Provider value={setFormClicked}>
-          
-            <SideBar />
-            <NavBar />
-            {/* <Link to={'/testing'}>TESTING</Link> */}
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/shoes/:name" element={<Shoe />} />
-              <Route path="/createStore" element={<CreateStore />} />
-              <Route path="/testing" element={<Testing />} />
-              <Route path="/store" element={<Store />} />
-            </Routes>
-            {formClicked && <Form />}
-          
+          <ToastContainer />
+          <SideBar />
+          <NavBar />
+          {/* <Link to={'/testing'}>TESTING</Link> */}
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/shoes/:name" element={<Shoe />} />
+            <Route path="/createStore" element={<CreateStore />} />
+            <Route path="/testing" element={<Testing />} />
+            <Route path="/store" element={<Store />} />
+          </Routes>
+          {formClicked && <Form />}
         </Click.Provider>
       </BrowserRouter>
     </>
