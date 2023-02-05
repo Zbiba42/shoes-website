@@ -155,6 +155,7 @@ let refreshTokens = []
 
 app.post('/refresh', (req, res) => {
   const refreshToken = req.body.token
+
   if (!refreshToken)
     return res
       .status(401)
@@ -166,17 +167,49 @@ app.post('/refresh', (req, res) => {
   }
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    err && console.log(err)
+    err &&
+      res.status(400).json({
+        succes: false,
+        data: err,
+      })
+  
     refreshTokens = refreshTokens.filter((token) => {
       if (token != refreshToken) {
         return token
       }
     })
-
-    const newAccesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
-      expiresIn: '30m',
+    
+    console.log({
+      id: user.id,
+      Fullname: user.Fullname,
+      Store: user.Store,
+      Cart: user.Cart,
+      Email: user.Email,
     })
-    const newRefreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+
+    const newAccesToken = jwt.sign(
+      {
+        id: user.id,
+        Fullname: user.Fullname,
+        Store: user.Store,
+        Cart: user.Cart,
+        Email: user.Email,
+      },
+      process.env.ACCES_TOKEN_SECRET,
+      {
+        expiresIn: '5s',
+      }
+    )
+    const newRefreshToken = jwt.sign(
+      {
+        id: user.id,
+        Fullname: user.Fullname,
+        Store: user.Store,
+        Cart: user.Cart,
+        Email: user.Email,
+      },
+      process.env.REFRESH_TOKEN_SECRET
+    )
 
     refreshTokens.push(newRefreshToken)
 
@@ -247,7 +280,7 @@ app.post('/LogIn', async (req, res) => {
       }
 
       const accesToken = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, {
-        expiresIn: '30m',
+        expiresIn: '5s',
       })
       const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
       refreshTokens.push(refreshToken)

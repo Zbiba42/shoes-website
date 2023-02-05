@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
@@ -8,7 +8,7 @@ import './navBar.css'
 const NavBar = () => {
   const [categories, setCategories] = useState([])
   // const [Cart, setCart] = useState()
-  const [height, setHeight] = useState('-140px')
+  
 
   const token = sessionStorage.getItem('AccesToken')
   let image =
@@ -31,13 +31,7 @@ const NavBar = () => {
     const categories = data.data
     setCategories(categories)
   }
-  const toggle = () => {
-    if (height === '0px') {
-      setHeight('-140px')
-    } else if (height === '-140px') {
-      setHeight('0px')
-    }
-  }
+  
   useEffect(() => {
     getCategories()
   }, [])
@@ -78,27 +72,9 @@ const NavBar = () => {
             backgroundImage: `url(${image})`,
           }}
         ></div>
-        <i className="fa-solid fa-angle-down" onClick={toggle}></i>
+        
       </div>
-      {token && (
-        <div className="profileDropDown" style={{ top: height }}>
-          <Link to="/" onClick={toggle}>
-            Account Infos
-          </Link>
-          {store == null ? (
-            <Link to="/createStore" onClick={toggle}>
-              Create Store
-            </Link>
-          ) : (
-            <Link to="/Store" onClick={toggle}>
-              Store
-            </Link>
-          )}
-          <Link to="/" onClick={toggle}>
-            Account Infos
-          </Link>
-        </div>
-      )}
+
     </>
   )
 }

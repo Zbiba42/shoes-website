@@ -16,17 +16,12 @@ const Shoe = () => {
   const addToCart = async () => {
     const token = sessionStorage.getItem('AccesToken')
     const { id } = jwt_decode(token)
-    const response = await axios.post(
-      'http://localhost:5000/addToCart',
-      { id: id, item: shoeData },
-      {
-        headers: {
-          authorization: 'Bearer ' + token,
-        },
-      }
-    )
-    if(response.status === 200){
-      toast.success('Item added to cart successfully !',{
+    const response = await axios.post('http://localhost:5000/addToCart', {
+      id: id,
+      item: shoeData,
+    })
+    if (response.status === 200) {
+      toast.success('Item added to cart successfully !', {
         position: toast.POSITION.TOP_CENTER,
       })
     }

@@ -6,7 +6,7 @@ export const Testing = () => {
   const getData = async()=>{
     
     const token = sessionStorage.getItem('AccesToken')
-        console.log(await axios.get('http://localhost:5000/testings'
+        console.log(await axios.get('http://localhost:5000/testings' 
         ))
     }
     

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SetStoreMode } from '../redux/StoreSlice'
 import jwt_decode from 'jwt-decode'
 
-const SideBar = () => {
+const SellerSideBar = () => {
   const setFormClicked = useContext(Click)
   const token = sessionStorage.getItem('AccesToken')
   const dispatch = useDispatch()
@@ -29,57 +29,37 @@ const SideBar = () => {
 
         <div className="links">
           <div className="link coloredLink">
-            <Link to="/">
-              <i className="fa-solid fa-bars"></i>Categories
+            <Link
+              onClick={() => {
+                dispatch(
+                  SetStoreMode({
+                    storeMode: 'user',
+                  })
+                )
+              }}
+            >
+              <i className="fa-solid fa-bars"></i>Customer Mode
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
           </div>
 
           <div className="link normal">
-            <Link to="/">
-              <i className="fa-solid fa-tags"></i>Best Offres
+            <Link to="/Account">
+              <i className="fa-solid fa-tags"></i>Account infos
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
           </div>
 
-          {token === null ? (
-            <div className="link normal">
-              <Link
-                onClick={() => {
-                  setFormClicked(true)
-                }}
-              >
-                <i className="fa-solid fa-store"></i>Sell With Us
-              </Link>
-              <i className="fa-solid fa-chevron-right"></i>
-            </div>
-          ) : jwt_decode(token).Store ? (
-            <div className="link normal">
-              <Link
-                onClick={() => {
-                  dispatch(
-                    SetStoreMode({
-                      storeMode : 'seller'
-                    })
-                  )
-                }}
-              >
-                <i className="fa-solid fa-store"></i>Switch to Seller Mode
-              </Link>
-              <i className="fa-solid fa-chevron-right"></i>
-            </div>
-          ) : (
-            <div className="link normal">
-              <Link to='/createStore'>
-                <i className="fa-solid fa-store"></i>Sell With Us
-              </Link>
-              <i className="fa-solid fa-chevron-right"></i>
-            </div>
-          )}
+          <div className="link normal">
+            <Link to='/Store'>
+              <i className="fa-solid fa-store"></i>Store
+            </Link>
+            <i className="fa-solid fa-chevron-right"></i>
+          </div>
 
           <div className="link normal">
-            <Link to="/">
-              <i className="fa-solid fa-truck"></i>Order
+            <Link to="/Products">
+              <i className="fa-solid fa-truck"></i>Products
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
           </div>
@@ -121,4 +101,4 @@ const SideBar = () => {
   )
 }
 
-export default SideBar
+export default SellerSideBar
