@@ -6,12 +6,17 @@ const { authToken } = require('../controllers/AuthenticationController')
 const {
   CreateStore,
   addToCart,
+  addToFav,
   UploadStoreImg,
 } = require('../controllers/userController')
 
 router.post('/createStore', authToken, CreateStore)
 
 router.post('/addToCart', authToken, addToCart)
+
+router.post('/addToFav', authToken, addToFav)
+
+
 
 const storageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -23,6 +28,6 @@ const storageEngine = multer.diskStorage({
 })
 const upload = multer({ storage: storageEngine })
 
-router.post('/upload', upload.single('image') , UploadStoreImg)
+router.post('/upload', upload.single('image'), UploadStoreImg)
 
 module.exports = router

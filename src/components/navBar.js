@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import { Link } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
@@ -62,8 +62,9 @@ const NavBar = () => {
         <i className="fa-solid fa-magnifying-glass"></i>
         <div className="buttons">
           <i className="fa-regular fa-bell"></i>
-          <i className="fa-regular fa-heart"></i>
-          <i className="fa-solid fa-bag-shopping"></i>
+          
+          <Link to='/Favorites'><i className="fa-regular fa-heart"></i></Link>
+          <Link to='/Cart'><i className="fa-solid fa-bag-shopping"></i></Link>
           <p>{CartLenght}</p>
         </div>
         <div

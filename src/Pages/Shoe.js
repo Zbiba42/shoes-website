@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 
 const Shoe = () => {
   const { name } = useParams()
+  console.log(name)
   const [shoeData, setShoeData] = useState()
   const getShoe = async () => {
     const { data } = await axios.get(`http://localhost:5000/api/Shoes/shoe/${name}`)
@@ -26,11 +27,26 @@ const Shoe = () => {
       })
     }
   }
+
+  const addToFav = async () => {
+    const token = sessionStorage.getItem('AccesToken')
+    const { id } = jwt_decode(token)
+    const response = await axios.post('http://localhost:5000/api/user/addToFav', {
+      id: id,
+      item: shoeData,
+    })
+    if (response.status === 200) {
+      toast.success('Item added to Favorites successfully !', {
+        position: toast.POSITION.TOP_CENTER,
+      })
+    }
+  }
+
   useEffect(() => {
     getShoe()
   }, [])
 
-  if (shoeData !== null) {
+  if (shoeData !== undefined) {
     return (
       <>
         <div className="shoeContainer">
@@ -64,7 +80,7 @@ const Shoe = () => {
                 </h4>
               </div>
 
-              <div className="button">
+              <div className="button" onClick={addToFav}>
                 <h4>
                   Favorite <i className="fa-solid fa-heart"></i>
                 </h4>

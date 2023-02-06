@@ -32,12 +32,23 @@ const addToCart = async (req, res) => {
   }
 }
 
+const addToFav = async (req, res) => {
+  try {
+    const id = req.body.id
+    const item = req.body.item
+    const Loved = await User.updateOne({ _id: id }, { $push: { Loved : item } })
+    res.status(200).json({ succes: true, data: Loved })
+  } catch (error) {
+    res.status(400).json({ succes: false, data: error.message })
+  }
+}
+
 const UploadStoreImg = async (req, res) => {
   await Store.updateOne(await Store.findOne().sort({ _id: -1 }), {
     image: `./uploads/${req.file.filename}`,
   })
   const Storeee = await Store.findOne().sort({ _id: -1 })
-  const { _id, Fullname, Cart, Email } = await User.findOne({
+  const { _id, Fullname, Cart, Email , Loved } = await User.findOne({
     Email: req.body.Email,
   })
 
@@ -46,6 +57,7 @@ const UploadStoreImg = async (req, res) => {
     Fullname: Fullname,
     Store: Storeee,
     Cart: Cart,
+    Loved : Loved,
     Email: Email,
   }
 
@@ -59,5 +71,6 @@ const UploadStoreImg = async (req, res) => {
 module.exports = {
   CreateStore,
   addToCart,
+  addToFav,
   UploadStoreImg,
 }

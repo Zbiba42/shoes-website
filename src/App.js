@@ -18,6 +18,8 @@ import { Store } from './Pages/Store'
 import { useSelector } from 'react-redux'
 import { Account } from './Pages/Account'
 import { Products } from './Pages/Products'
+import { Cart } from './Pages/Cart'
+import { Favorites } from './Pages/Favorites'
 
 export const Click = createContext(null)
 
@@ -80,7 +82,9 @@ export default function App() {
             <Route path="/Store" element={<Store />} />
             <Route path="/Account" element={<Account />} />
             <Route path="/Products" element={<Products />} />
-
+            <Route path="/Cart" element={<Cart />} />
+            <Route path="/Favorites" element={<Favorites />} />
+            
           </Routes>
           {formClicked && <Form />}
         </Click.Provider>

@@ -20,6 +20,7 @@ app.use('/api/Authentication', Authentication)
 
 app.use('/api/user', User)
 
+// app.use('api/seller' , )
 
 app.listen(5000, () => {
   console.log('server is listening')
