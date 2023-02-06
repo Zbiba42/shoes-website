@@ -21,7 +21,7 @@ export default function LogIn() {
     }
     try {
       
-      const response = await axios.post('http://localhost:5000/LogIn', user)
+      const response = await axios.post('http://localhost:5000/api/Authentication/LogIn', user)
       
       if (response.data.succes) {
         sessionStorage.setItem('AccesToken',response.data.data.accesToken)

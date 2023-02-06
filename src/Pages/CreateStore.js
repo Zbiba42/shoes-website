@@ -31,18 +31,13 @@ export default function CreateStore() {
     }
     try {
       const StoreResponse = await axios.post(
-        'http://localhost:5000/createStore',
-        store,
-        {
-          headers: {
-            authorization: 'Bearer ' + token,
-          },
-        }
+        'http://localhost:5000/api/user/createStore',
+        store
       )
       console.log(StoreResponse)
 
       const ImgResponse = await axios.post(
-        'http://localhost:5000/upload',
+        'http://localhost:5000/api/user/upload',
         { image: image.current.files[0], Email: Email },
         {
           headers: {

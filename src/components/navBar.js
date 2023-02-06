@@ -27,7 +27,7 @@ const NavBar = () => {
   }
 
   const getCategories = async () => {
-    const { data } = await axios.get('http://localhost:5000/categories')
+    const { data } = await axios.get('http://localhost:5000/api/Shoes/categories')
     const categories = data.data
     setCategories(categories)
   }

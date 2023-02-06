@@ -45,7 +45,7 @@ export default function App() {
         console.log(refreshToken)
 
         return axios
-          .post('http://localhost:5000/refresh', { token: refreshToken })
+          .post('http://localhost:5000/api/Authentication/refresh', { token: refreshToken })
           .then((data) => {
             const { refreshToken, accessToken } = data.data.data
             console.log('refresh -> ' + refreshToken)
@@ -71,7 +71,7 @@ export default function App() {
           {StoreMode == 'user'? <SideBar />: <SellerSideBar/> }
           
           <NavBar />
-          <Link to={'/testing'}>TESTING</Link>
+          {/* <Link to={'/testing'}>TESTING</Link> */}
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/shoes/:name" element={<Shoe />} />

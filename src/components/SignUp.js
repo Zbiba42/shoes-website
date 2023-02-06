@@ -15,7 +15,7 @@ export default function SignUp() {
       Email: Email.current.value,
       Password: Password.current.value,
     }
-    const response = await axios.post('http://localhost:5000/SignUp', user)
+    const response = await axios.post('http://localhost:5000/api/Authentication/SignUp', user)
     
     if (response.data.succes) {
       setsignIn(true)

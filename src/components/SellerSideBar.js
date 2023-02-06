@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './sideBar.css'
 import { Click } from '../App'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +10,7 @@ const SellerSideBar = () => {
   const setFormClicked = useContext(Click)
   const token = sessionStorage.getItem('AccesToken')
   const dispatch = useDispatch()
+  const navigateTo = useNavigate()
 
   return (
     <>
@@ -37,6 +38,7 @@ const SellerSideBar = () => {
                   })
                 )
               }}
+              to="/"
             >
               <i className="fa-solid fa-bars"></i>Customer Mode
             </Link>
@@ -51,7 +53,7 @@ const SellerSideBar = () => {
           </div>
 
           <div className="link normal">
-            <Link to='/Store'>
+            <Link to="/Store">
               <i className="fa-solid fa-store"></i>Store
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
@@ -71,8 +73,13 @@ const SellerSideBar = () => {
                   onClick={() => {
                     sessionStorage.removeItem('AccesToken')
                     sessionStorage.removeItem('RefreshToken')
-                    Navigate({ to: '/' })
+                    dispatch(
+                      SetStoreMode({
+                        storeMode: 'user',
+                      })
+                    )
                   }}
+                  to="/"
                 >
                   <i className="fas fa-sign-out-alt"></i>Logout
                 </Link>
