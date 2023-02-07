@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react'
-import jwtDecode from 'jwt-decode'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 export const Cart = () => {
-  const GetCart = async () => {
-    const { Cart } = jwtDecode(sessionStorage.getItem('AccesToken'))
-    console.log(Cart)
-  }
-  useEffect(()=>{
-    GetCart()
-  },[])
+  const {Cart} = useSelector(state => state.Cart_Favorites)
+  console.log(Cart)
 
   return <div>Cart</div>
 }

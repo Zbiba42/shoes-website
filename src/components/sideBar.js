@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import './sideBar.css'
 import { Click } from '../App'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { SetStoreMode } from '../redux/StoreSlice'
 import jwt_decode from 'jwt-decode'
 

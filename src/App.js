@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import './app.css'
 import Main from './Pages/main'
@@ -41,10 +41,10 @@ export default function App() {
         if (err.response.status !== 401) {
           return Promise.reject(err)
         }
-        console.log(err)
+     
 
         const refreshToken = sessionStorage.getItem('RefreshToken')
-        console.log(refreshToken)
+        
 
         return axios
           .post('http://localhost:5000/api/Authentication/refresh', { token: refreshToken })
@@ -70,7 +70,7 @@ export default function App() {
       <BrowserRouter>
         <Click.Provider value={setFormClicked}>
           <ToastContainer />
-          {StoreMode == 'user'? <SideBar />: <SellerSideBar/> }
+          {StoreMode === 'user'? <SideBar />: <SellerSideBar/> }
           
           <NavBar />
           {/* <Link to={'/testing'}>TESTING</Link> */}

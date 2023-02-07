@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react'
-import jwtDecode from 'jwt-decode'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import './Favorites.css'
 
 export const Favorites = () => {
-  const GetFav = async () => {
-    const { Loved } = jwtDecode(sessionStorage.getItem('AccesToken'))
-    console.log(Loved)
-  }
-  useEffect(()=>{
-    GetFav()
-  },[])
+  const { Favorites } = useSelector((state) => state.Cart_Favorites)
+  console.log(Favorites)
   return (
-    <div>Favorites</div>
+    <>
+      <div className="container">
+        {Favorites.map((fav) => {
+          return <>
+          
+          </>
+        })}
+      </div>
+    </>
   )
 }

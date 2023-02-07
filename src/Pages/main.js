@@ -8,7 +8,6 @@ const Main = () => {
 
   const getTop = async () => {
     const { data } = await axios.get('http://localhost:5000/api/Shoes/popular')
-    console.log(data)
     const top = data.data
     setTopProducts(top)
   }

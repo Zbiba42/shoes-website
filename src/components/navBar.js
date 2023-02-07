@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
 import './navBar.css'
+import { useSelector } from 'react-redux'
 
 const NavBar = () => {
   const [categories, setCategories] = useState([])
@@ -14,10 +15,11 @@ const NavBar = () => {
   let image =
     'https://thumbs.dreamstime.com/z/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
   let store
-  let CartLenght = 0
+  let CartLength = useSelector(state => state.Cart_Favorites.Cart.length)
+  let FavoriteLength = useSelector(state => state.Cart_Favorites.Favorites.length)
   if (token != null) {
     console.log(jwt_decode(token))
-    CartLenght = jwt_decode(token).Cart.length
+    
     
     const { Store } = jwt_decode(token)
     store = Store
@@ -62,10 +64,11 @@ const NavBar = () => {
         <i className="fa-solid fa-magnifying-glass"></i>
         <div className="buttons">
           <i className="fa-regular fa-bell"></i>
-          
+          <p>{0}</p>
           <Link to='/Favorites'><i className="fa-regular fa-heart"></i></Link>
+          <p>{FavoriteLength}</p>
           <Link to='/Cart'><i className="fa-solid fa-bag-shopping"></i></Link>
-          <p>{CartLenght}</p>
+          <p>{CartLength}</p>
         </div>
         <div
           className="profile"

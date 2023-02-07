@@ -2,17 +2,20 @@ import React, { useContext, useRef  } from 'react'
 import { loginToggleContext } from './Form'
 import axios from 'axios'
 import { Click } from '../App'
+import { useDispatch } from 'react-redux'
+import { setCart , setFavorites } from '../redux/Cart_Favorites'
+import jwtDecode from 'jwt-decode'
 
 
 
 export default function LogIn() {
   const { setsignIn, setSignUp, setEffect } = useContext(loginToggleContext)
   const setFormClicked = useContext(Click)
-
-  
   
   const Email = useRef(null)
   const Password = useRef(null)
+
+  const dispatch = useDispatch()
 
   const SignInHandler = async () => {
     const user = {
@@ -26,7 +29,12 @@ export default function LogIn() {
       if (response.data.succes) {
         sessionStorage.setItem('AccesToken',response.data.data.accesToken)
         sessionStorage.setItem('RefreshToken',response.data.data.refreshToken)
-      
+        
+        dispatch(
+          setCart({Cart : jwtDecode(response.data.data.accesToken).Cart}),
+          setFavorites({Favorites : jwtDecode(response.data.data.accesToken).Loved})
+        )
+        
        
         setEffect('-80%')
         setTimeout(() => {

@@ -1,26 +1,36 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
-
 import './Shoe.css'
 import { toast } from 'react-toastify'
+import jwt_decode from 'jwt-decode'
+import { useDispatch } from 'react-redux'
+import { addToCart, addToFavorites } from '../redux/Cart_Favorites'
 
 const Shoe = () => {
   const { name } = useParams()
-  console.log(name)
   const [shoeData, setShoeData] = useState()
+  const dispatch = useDispatch()
+
   const getShoe = async () => {
-    const { data } = await axios.get(`http://localhost:5000/api/Shoes/shoe/${name}`)
+    const { data } = await axios.get(
+      `http://localhost:5000/api/Shoes/shoe/${name}`
+    )
     setShoeData(data.data)
   }
-  const addToCart = async () => {
+  const addtoCart = async () => {
     const token = sessionStorage.getItem('AccesToken')
     const { id } = jwt_decode(token)
-    const response = await axios.post('http://localhost:5000/api/user/addToCart', {
-      id: id,
-      item: shoeData,
-    })
+
+    dispatch(addToCart({ item: shoeData }))
+
+    const response = await axios.post(
+      'http://localhost:5000/api/user/addToCart',
+      {
+        id: id,
+        item: shoeData,
+      }
+    )
     if (response.status === 200) {
       toast.success('Item added to cart successfully !', {
         position: toast.POSITION.TOP_CENTER,
@@ -31,10 +41,16 @@ const Shoe = () => {
   const addToFav = async () => {
     const token = sessionStorage.getItem('AccesToken')
     const { id } = jwt_decode(token)
-    const response = await axios.post('http://localhost:5000/api/user/addToFav', {
-      id: id,
-      item: shoeData,
-    })
+
+    dispatch(addToFavorites({ item: shoeData }))
+
+    const response = await axios.post(
+      'http://localhost:5000/api/user/addToFav',
+      {
+        id: id,
+        item: shoeData,
+      }
+    )
     if (response.status === 200) {
       toast.success('Item added to Favorites successfully !', {
         position: toast.POSITION.TOP_CENTER,
@@ -51,7 +67,7 @@ const Shoe = () => {
       <>
         <div className="shoeContainer">
           <div className="imgContainer">
-            <img src={shoeData.imageURL} alt="image unavailable" />
+            <img src={shoeData.imageURL} alt="unavailable" />
           </div>
           <div className="infoContainer">
             <h4 className="Shoecategory">
@@ -74,7 +90,7 @@ const Shoe = () => {
               </div>
             </div>
             <div className="buttonsContainer">
-              <div className="button" onClick={addToCart}>
+              <div className="button" onClick={addtoCart}>
                 <h4>
                   Add to Cart <i className="fa-solid fa-cart-shopping"></i>
                 </h4>
