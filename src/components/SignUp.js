@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import { loginToggleContext } from './Form'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export default function SignUp() {
   const { setsignIn, setSignUp } = useContext(loginToggleContext)
@@ -9,17 +10,41 @@ export default function SignUp() {
   const Email = useRef(null)
   const Password = useRef(null)
 
+  const validateEmail = (email) => {
+    return email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  }
   const SignUpHandler = async () => {
-    const user = {
-      Fullname: FullName.current.value,
-      Email: Email.current.value,
-      Password: Password.current.value,
-    }
-    const response = await axios.post('http://localhost:5000/api/Authentication/SignUp', user)
-    
-    if (response.data.succes) {
-      setsignIn(true)
-      setSignUp(false)
+    if (validateEmail(Email.current.value)) {
+      const user = {
+        Fullname: FullName.current.value,
+        Email: Email.current.value,
+        Password: Password.current.value,
+      }
+      const response = await axios.post(
+        'http://localhost:5000/api/Authentication/SignUp',
+        user
+      )
+
+      if (response.data.succes) {
+        setsignIn(true)
+        setSignUp(false)
+        toast.success('Account Created Successfully !', {
+          position: toast.POSITION.TOP_CENTER,
+        })
+      }
+      if (response.data.error) {
+        toast.error(response.data.error, {
+          position: toast.POSITION.TOP_CENTER,
+        })
+      }
+    } else {
+      toast.error('Unvalid email !', {
+        position: toast.POSITION.TOP_CENTER,
+      })
     }
   }
 

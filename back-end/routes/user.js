@@ -6,17 +6,24 @@ const { authToken } = require('../controllers/AuthenticationController')
 const {
   CreateStore,
   addToCart,
+  removeFromCart,
   addToFav,
+  removeFromFav,
   UploadStoreImg,
+  UpdateInfos,
 } = require('../controllers/userController')
 
 router.post('/createStore', authToken, CreateStore)
 
 router.post('/addToCart', authToken, addToCart)
 
+router.post('/removeFromCart', authToken, removeFromCart)
+
 router.post('/addToFav', authToken, addToFav)
 
+router.post('/removeFromFav', authToken, removeFromFav)
 
+router.post('/updateInfos', authToken, UpdateInfos)
 
 const storageEngine = multer.diskStorage({
   destination: (req, file, cb) => {

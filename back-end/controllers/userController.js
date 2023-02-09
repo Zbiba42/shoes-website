@@ -32,14 +32,42 @@ const addToCart = async (req, res) => {
   }
 }
 
+const removeFromCart = async (req, res) => {
+  try {
+    const UserId = req.body.userId
+    const Item = req.body.item
+    const { Cart } = await User.findOne({ id: UserId })
+    const item = Cart.find((item) => item.name === Item.name)
+    Cart.splice(Cart.indexOf(item), 1)
+    const response = await User.updateOne({ id: UserId }, { Cart: Cart })
+    res.status(200).json({ succes: true, data: Cart })
+  } catch (error) {
+    res.status(400).json({ succes: false, error: error })
+  }
+}
+
 const addToFav = async (req, res) => {
   try {
     const id = req.body.id
     const item = req.body.item
-    const Loved = await User.updateOne({ _id: id }, { $push: { Loved : item } })
+    const Loved = await User.updateOne({ _id: id }, { $push: { Loved: item } })
     res.status(200).json({ succes: true, data: Loved })
   } catch (error) {
     res.status(400).json({ succes: false, data: error.message })
+  }
+}
+
+const removeFromFav = async (req, res) => {
+  try {
+    const UserId = req.body.userId
+    const Item = req.body.item
+    const { Loved } = await User.findOne({ id: UserId })
+    const item = Loved.find((item) => item.name === Item.name)
+    Loved.splice(Loved.indexOf(item), 1)
+    const response = await User.updateOne({ id: UserId }, { Loved : Loved })
+    res.status(200).json({ succes: true, data: Loved })
+  } catch (error) {
+    res.status(400).json({ succes: false, error: error })
   }
 }
 
@@ -48,7 +76,7 @@ const UploadStoreImg = async (req, res) => {
     image: `./uploads/${req.file.filename}`,
   })
   const Storeee = await Store.findOne().sort({ _id: -1 })
-  const { _id, Fullname, Cart, Email , Loved } = await User.findOne({
+  const { _id, Fullname, Cart, Email, Loved } = await User.findOne({
     Email: req.body.Email,
   })
 
@@ -57,7 +85,7 @@ const UploadStoreImg = async (req, res) => {
     Fullname: Fullname,
     Store: Storeee,
     Cart: Cart,
-    Loved : Loved,
+    Loved: Loved,
     Email: Email,
   }
 
@@ -68,9 +96,27 @@ const UploadStoreImg = async (req, res) => {
   res.status(200).json({ succes: true, data: { accesToken: accestoken } })
 }
 
+const UpdateInfos = async (req, res) => {
+  try {
+    const user = {
+      id: req.body.id,
+      Fullname: req.body.Fullname,
+      Email: req.body.Email,
+    }
+    const response = await User.updateOne({ id: id }, { user })
+
+    res.status(200).json({ succes: true, data: response })
+  } catch (error) {
+    res.status(400).json({ succes: false, error: error })
+  }
+}
+
 module.exports = {
   CreateStore,
   addToCart,
+  removeFromCart,
   addToFav,
+  removeFromFav,
   UploadStoreImg,
+  UpdateInfos,
 }

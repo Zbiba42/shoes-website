@@ -1,41 +1,44 @@
-import React, { useContext, useRef  } from 'react'
+import React, { useContext, useRef } from 'react'
 import { loginToggleContext } from './Form'
 import axios from 'axios'
 import { Click } from '../App'
 import { useDispatch } from 'react-redux'
-import { setCart , setFavorites } from '../redux/Cart_Favorites'
+import { setCart, setFavorites } from '../redux/Cart_Favorites'
 import jwtDecode from 'jwt-decode'
-
-
 
 export default function LogIn() {
   const { setsignIn, setSignUp, setEffect } = useContext(loginToggleContext)
   const setFormClicked = useContext(Click)
-  
+
   const Email = useRef(null)
   const Password = useRef(null)
 
   const dispatch = useDispatch()
 
+
   const SignInHandler = async () => {
+  
     const user = {
       Email: Email.current.value,
       Password: Password.current.value,
     }
     try {
-      
-      const response = await axios.post('http://localhost:5000/api/Authentication/LogIn', user)
-      
+      const response = await axios.post(
+        'http://localhost:5000/api/Authentication/LogIn',
+        user
+      )
+
       if (response.data.succes) {
-        sessionStorage.setItem('AccesToken',response.data.data.accesToken)
-        sessionStorage.setItem('RefreshToken',response.data.data.refreshToken)
-        
+        sessionStorage.setItem('AccesToken', response.data.data.accesToken)
+        sessionStorage.setItem('RefreshToken', response.data.data.refreshToken)
+
         dispatch(
-          setCart({Cart : jwtDecode(response.data.data.accesToken).Cart}),
-          setFavorites({Favorites : jwtDecode(response.data.data.accesToken).Loved})
+          setCart({ Cart: jwtDecode(response.data.data.accesToken).Cart }),
+          setFavorites({
+            Favorites: jwtDecode(response.data.data.accesToken).Loved,
+          })
         )
-        
-       
+
         setEffect('-80%')
         setTimeout(() => {
           setFormClicked(false)
@@ -52,16 +55,10 @@ export default function LogIn() {
         <h2 className="header">Welcome Back</h2>
         <p>Welcome Back! please enter you details.</p>
         <h4>Email</h4>
-        <input
-          type="email"
-         
-          placeholder="Enter your Email"
-          ref={Email}
-        />
+        <input type="email" placeholder="Enter your Email" ref={Email} />
         <h4>Password</h4>
         <input
           type="password"
-          
           placeholder="Enter your Password"
           ref={Password}
         />
