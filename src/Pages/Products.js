@@ -1,11 +1,10 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
 
 export const Products = () => {
   const token = sessionStorage.getItem('AccesToken')
-  if (token == null || jwt_decode(token).Store != null ) {
-    return <Navigate to="/" />
+  if (token == null) {
+    return <div>{token ? '' : <Navigate to="/" />}</div>
   }
   return (
     <div>Products</div>
