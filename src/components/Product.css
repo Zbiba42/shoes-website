@@ -1,0 +1,25 @@
+.product{
+    width: 400px;
+    outline: solid 1px rgb(175, 175, 175);
+    height: 90px;
+    position: relative;
+    margin: 10px;
+    padding: 1px;
+}
+img{
+    width: 25%;
+    margin-right: 10px;
+    float: left;
+}
+
+.brand{
+    color: rgb(161, 161, 161);
+}
+
+.delete{
+   position: absolute;
+   right: 15px;
+   top: 45%;
+   color: rgb(71, 71, 71);
+   cursor: pointer;
+}

@@ -1,0 +1,63 @@
+.products{
+    margin: 2px 5% 0 0;
+    /* outline: 1px solid black ; */
+    width: fit-content;
+    float: right;
+
+}
+.products .h2{
+    font-weight: 900;
+    
+}
+.products .orders{
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.products .TotalPrice{
+    float: right;
+    margin: 10px;
+    color: rgb(59, 59, 59);
+}
+.products .total{
+    float: left;
+    margin: 10px;
+    color: rgb(59, 59, 59);
+}
+.items{
+    /* outline: 1px solid black; */
+    overflow: scroll;
+    height: 427px;
+    width: fit-content;
+   
+}
+
+.items::-webkit-scrollbar {
+    width: 2px;
+}
+
+.items::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.items::-webkit-scrollbar-thumb {
+    background: #888; 
+} 
+
+.items::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.Button{
+    width: 400px;
+    border: none;
+    font-weight: 700;
+    margin-left:10px;
+    height: 35px;
+    outline: 1px solid green;
+    margin-top: 10px;
+}
+.Button:hover{
+    background-color: rgb(0, 85, 0);
+    color: white;
+    cursor: pointer;
+}
