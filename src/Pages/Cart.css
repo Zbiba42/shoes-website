@@ -68,7 +68,7 @@
 
 .Date{
     width: 100%;
-    height: fit-content;
+    height: 100px;
     outline: 1px solid rgb(206, 0, 0);
     clear: both;
 }

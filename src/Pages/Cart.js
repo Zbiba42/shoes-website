@@ -76,8 +76,8 @@ export const Cart = () => {
             <h3 className="title">Schedule Delivery</h3>
 
             <h4>Date</h4>
-            <h4>{'2022-13-2'}</h4>
-            <input type="date" name="Date" id="Date" onChange={(e)=>{console.log(e.target.value)}} />
+            <h4 style={{ float : 'left' }}>{'2022-13-2'}</h4>
+            <input style={{ float : 'left' }} type="date" name="Date" id="Date" onChange={(e)=>{console.log(e.target.value)}} />
           </div>
 
           <div className="payement">
