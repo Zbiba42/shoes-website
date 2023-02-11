@@ -1,3 +1,89 @@
+.FormContainer{
+    margin: 2px 0 0 0;
+    /* outline: 1px solid black; */
+    width: 605px;
+    /* height: 560px; */
+    float: left;
+}
+.form{
+    /* outline: 1px solid black; */
+    /* height: 427px; */
+    width: max;
+    margin: 10px;
+    padding: 20px;
+    
+}
+.formSlice1{
+    width: 50%;
+    height: fit-content;
+    /* outline: 1px solid black; */
+    float: left;
+    margin-bottom: 20px;
+}
+.formSlice2{
+    width: 50%;
+    height: fit-content;
+    /* outline: 1px solid black; */
+    float: left;
+}
+.form .input{
+    width: 95%;
+    height: 30px;
+    border: none;
+    box-shadow: #8b8b8b 0 1px 1.5px 0;
+    padding: 5px;
+    font-weight: 700 ;
+    margin: 0 0 10px 0;
+}
+/* .form .input:focus{
+    border: 1px solid grey;
+} */
+.form .input::placeholder{
+    color: #888888;
+}
+.form h4{
+    margin: 0 0 10px 0;
+}
+.payement{
+    width: 100%;
+    height: fit-content;
+    /* outline: 1px solid rgb(206, 0, 0); */
+    clear: both;
+    
+}
+.payement .title{
+    margin: 20px 0;
+}
+.payement input{
+    margin: 0  10px  0 30px ;
+    
+}
+.payement input[type='radio']{
+    accent-color: black;
+}
+.payement label{
+    font-weight: 500;
+    margin-right: 15%;
+}
+
+.Date{
+    width: 100%;
+    height: fit-content;
+    outline: 1px solid rgb(206, 0, 0);
+    clear: both;
+}
+.Date h4{
+    margin: 10px;
+}
+#Date{
+    width: 16px;
+    height: 16px;
+    border: none;
+}
+#Date:focus{
+    /* text-decoration: none; */
+    border: none;
+}
 .products{
     margin: 2px 5% 0 0;
     /* outline: 1px solid black ; */
@@ -9,7 +95,7 @@
     font-weight: 900;
     
 }
-.products .orders{
+.orders{
     margin-bottom: 10px;
     margin-top: 20px;
 }

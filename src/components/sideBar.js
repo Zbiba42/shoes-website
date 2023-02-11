@@ -37,7 +37,7 @@ const SideBar = () => {
 
           <div className="link normal">
             <Link to="/">
-              <i className="fa-solid fa-tags"></i>Best Offres
+              <i className="fa-solid fa-tags"></i>Best Offers
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
           </div>
