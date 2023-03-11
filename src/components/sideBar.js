@@ -29,7 +29,7 @@ const SideBar = () => {
 
         <div className="links">
           <div className="link coloredLink">
-            <Link to="/">
+            <Link to="/Categories">
               <i className="fa-solid fa-bars"></i>Categories
             </Link>
             <i className="fa-solid fa-chevron-right"></i>
@@ -59,7 +59,7 @@ const SideBar = () => {
                 onClick={() => {
                   dispatch(
                     SetStoreMode({
-                      storeMode : 'seller'
+                      storeMode: 'seller',
                     })
                   )
                 }}
@@ -70,7 +70,7 @@ const SideBar = () => {
             </div>
           ) : (
             <div className="link normal">
-              <Link to='/createStore'>
+              <Link to="/createStore">
                 <i className="fa-solid fa-store"></i>Sell With Us
               </Link>
               <i className="fa-solid fa-chevron-right"></i>
