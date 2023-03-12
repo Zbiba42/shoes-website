@@ -21,6 +21,7 @@ import { Products } from './Pages/Products'
 import { Cart } from './Pages/Cart'
 import { Favorites } from './Pages/Favorites'
 import { Categories } from './Pages/Categories'
+import { Category } from './Pages/Category'
 
 export const Click = createContext(null)
 
@@ -85,6 +86,7 @@ export default function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Favorites" element={<Favorites />} />
             <Route path="/Categories" element={<Categories />} />
+            <Route path="/category/:category" element={<Category />} />
           </Routes>
           {formClicked && <Form />}
         </Click.Provider>

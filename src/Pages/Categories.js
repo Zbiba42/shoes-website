@@ -9,8 +9,6 @@ export const Categories = () => {
     const { data } = await axios.get(
       'http://localhost:5000/api/Shoes/categories'
     )
-
-    console.log(data)
     setCategories(data.data)
   }
   useEffect(() => {
@@ -20,7 +18,7 @@ export const Categories = () => {
     <>
       <div className="container">
         <h2>
-           <span>Categories</span>
+          <span>Categories</span>
         </h2>
         {Categories.map((category) => {
           return <CategoryLink category={category} />

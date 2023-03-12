@@ -19,7 +19,6 @@ const getCategoriesNames = async (req, res) => {
     const Shoes = await findAll()
     let results = []
     Shoes.map((shoe) => {
-      console.log(shoe)
       if (results.includes(shoe.category) == false) {
         results.push(shoe.category)
       }
@@ -38,11 +37,17 @@ const getCategoriesNames = async (req, res) => {
 
 const getShoesInCategory = async (req, res) => {
   const Shoes = await findAll()
-  let category = req.params.category
+  let category = req.params.category.toLowerCase()
+  const startIndex = parseInt(req.body.startIndex) || 0
+  const endIndex = req.body.endIndex
   let results = []
+  let count = 0
   Shoes.map((shoe) => {
-    if (shoe.category == category) {
-      results.push(shoe)
+    if (shoe.category.toLowerCase() == category) {
+      count++
+      if (count >= startIndex && count <= endIndex) {
+        results.push(shoe)
+      }
     }
   })
   if (results.length >= 1) {

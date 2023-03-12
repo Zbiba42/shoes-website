@@ -1,0 +1,44 @@
+.product-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.product-filter-bar__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.product-filter-bar__item label {
+  margin-right: 0.5rem;
+}
+
+.product-filter-bar__item select {
+  font-size: 1rem;
+  padding: 0.3rem;
+  border-radius: 0.25rem;
+}
+  
+.product-filter-bar__item select {
+  height: 35px;
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.3rem;
+  border-radius: 0.25rem;
+  margin-right: 1rem;
+  width: 60px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
