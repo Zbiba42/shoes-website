@@ -54,7 +54,7 @@ const getShoesInCategory = async (req, res) => {
     }
   })
   if (results.length >= 1) {
-    res.status(200).json({ succes: true, data: results, error: '' })
+    res.status(200).json({ succes: true, data: results, length: count })
   } else {
     res
       .status(200)

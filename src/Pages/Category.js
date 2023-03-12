@@ -10,6 +10,7 @@ export const Category = () => {
   const pageSize = useRef()
   const gender = useRef()
   const sortBy = useRef()
+  let [length, setLength] = useState()
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setendIndex] = useState(10)
   const GetProducts = async () => {
@@ -17,6 +18,7 @@ export const Category = () => {
       `http://localhost:5000/api/Shoes/categories/${category}?startIndex=${startIndex}&endIndex=${endIndex}&gender=${gender.current.value}`
     )
     setProducts(data.data)
+    setLength(data.length)
   }
   const handleApplyButtonClick = () => {
     const pagesize = parseInt(pageSize.current.value)
@@ -45,7 +47,6 @@ export const Category = () => {
   }
   useEffect(() => {
     GetProducts()
-    console.log(Products)
   }, [endIndex, startIndex])
 
   return (
@@ -85,9 +86,19 @@ export const Category = () => {
             </button>
           )}
 
-          <button className="pagination-btn" onClick={onGoNext}>
+          {endIndex >= length ? (
+            <button className="pagination-btn" disabled="true">
+              Go next &gt;
+            </button>
+          ) : (
+            <button className="pagination-btn" onClick={onGoNext}>
+              Go next &gt;
+            </button>
+          )}
+
+          {/* <button className="pagination-btn" onClick={onGoNext}>
             Go next &gt;
-          </button>
+          </button> */}
         </div>
       </div>
     </>
