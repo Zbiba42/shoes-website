@@ -12,7 +12,7 @@
     transition: all 0.3s ease;
     background-color: #ffffff;
     background-image: linear-gradient(to right, hsl(342, 85%, 50%), hsl(316deg 68% 32%));
-
+    width: fit-content;
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   }
   

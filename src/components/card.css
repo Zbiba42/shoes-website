@@ -6,7 +6,7 @@
     margin-right: 20px;
     padding: 10px;
     position: relative;
-   
+    margin-bottom: 20px;
 }
 .card:hover{
     outline: 1px solid #000F08;
