@@ -8,21 +8,32 @@ export const Category = () => {
   const { category } = useParams()
   const [Products, setProducts] = useState([])
   const pageSize = useRef()
+  const gender = useRef()
+  const sortBy = useRef()
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setendIndex] = useState(10)
   const GetProducts = async () => {
-    const { data } = await axios.post(
-      'http://localhost:5000/api/Shoes/categories/' + category,
-      {
-        startIndex: startIndex,
-        endIndex: endIndex,
-      }
+    const { data } = await axios.get(
+      `http://localhost:5000/api/Shoes/categories/${category}?startIndex=${startIndex}&endIndex=${endIndex}&gender=${gender.current.value}`
     )
     setProducts(data.data)
   }
   const handleApplyButtonClick = () => {
     const pagesize = parseInt(pageSize.current.value)
+    setStartIndex(0)
     setendIndex(pagesize)
+    GetProducts()
+    if (sortBy.current.value == 'price-asc') {
+      const SortedProducts = Products.sort((a, b) => {
+        return a.price - b.price
+      })
+      setProducts([...SortedProducts])
+    } else if (sortBy.current.value == 'price-desc') {
+      const SortedProducts = Products.sort((a, b) => {
+        return b.price - a.price
+      })
+      setProducts([...SortedProducts])
+    }
   }
   const onGoNext = () => {
     setStartIndex(startIndex + parseInt(pageSize.current.value))
@@ -34,7 +45,7 @@ export const Category = () => {
   }
   useEffect(() => {
     GetProducts()
-    console.log(startIndex)
+    console.log(Products)
   }, [endIndex, startIndex])
 
   return (
@@ -46,6 +57,8 @@ export const Category = () => {
         </h2>
         <FilterBar
           pageSize={pageSize}
+          gender={gender}
+          sortBy={sortBy}
           handleApplyButtonClick={handleApplyButtonClick}
         />
         <div className="cards">

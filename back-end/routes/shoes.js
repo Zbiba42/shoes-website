@@ -17,7 +17,7 @@ router.get('/popular', getPopularShoes)
 
 router.get('/categories', getCategoriesNames)
 
-router.post('/categories/:category', getShoesInCategory)
+router.get('/categories/:category', getShoesInCategory)
 
 router.get('/shoe/:name', getShoeInfo)
 

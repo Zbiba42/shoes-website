@@ -38,15 +38,18 @@ const getCategoriesNames = async (req, res) => {
 const getShoesInCategory = async (req, res) => {
   const Shoes = await findAll()
   let category = req.params.category.toLowerCase()
-  const startIndex = parseInt(req.body.startIndex) || 0
-  const endIndex = req.body.endIndex
+  const startIndex = parseInt(req.query.startIndex)
+  const endIndex = parseInt(req.query.endIndex)
+  const gender = req.query.gender.toLowerCase()
   let results = []
   let count = 0
   Shoes.map((shoe) => {
     if (shoe.category.toLowerCase() == category) {
-      count++
-      if (count >= startIndex && count <= endIndex) {
-        results.push(shoe)
+      if (shoe.gender.toLowerCase() == gender || gender == 'all') {
+        count++
+        if (count > startIndex && count <= endIndex) {
+          results.push(shoe)
+        }
       }
     }
   })
