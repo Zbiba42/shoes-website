@@ -22,7 +22,7 @@ import { Cart } from './Pages/Cart'
 import { Favorites } from './Pages/Favorites'
 import { Categories } from './Pages/Categories'
 import { Category } from './Pages/Category'
-
+import { Search } from './Pages/Search'
 export const Click = createContext(null)
 
 export default function App() {
@@ -87,6 +87,7 @@ export default function App() {
             <Route path="/Favorites" element={<Favorites />} />
             <Route path="/Categories" element={<Categories />} />
             <Route path="/category/:category" element={<Category />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
           {formClicked && <Form />}
         </Click.Provider>

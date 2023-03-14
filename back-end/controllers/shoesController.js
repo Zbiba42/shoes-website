@@ -22,7 +22,9 @@ const getCategoriesNames = async (req, res) => {
 
 const getShoesInCategory = async (req, res) => {
   let category = req.params.category.toUpperCase()
-  const Shoes = await Product.find({ category: category })
+  const Shoes = await Product.find({
+    category: { $regex: category, $options: 'i' },
+  })
   const startIndex = parseInt(req.query.startIndex)
   const endIndex = parseInt(req.query.endIndex)
   const gender = req.query.gender.toLowerCase()
@@ -60,7 +62,7 @@ const getPopularShoes = async (req, res) => {
 
 const getShoeInfo = async (req, res) => {
   let name = req.params.name.trim()
-  const Shoe = await Product.findOne({ name: name })
+  const Shoe = await Product.findOne({ name: { $regex: name, $options: 'i' } })
   if (Shoe) {
     res.status(200).json({ succes: true, data: Shoe, error: '' })
   } else {
@@ -72,10 +74,46 @@ const getShoeInfo = async (req, res) => {
   }
 }
 
+const Search = async (req, res) => {
+  const { searchTerm, searchCategory, searchGender } = req.query
+  let query = {}
+
+  if (searchTerm) {
+    query.name = { $regex: searchTerm, $options: 'i' }
+  }
+  if (searchCategory && searchCategory !== 'All') {
+    query.category = { $regex: searchCategory, $options: 'i' }
+  }
+  if (searchGender && searchGender !== 'all') {
+    query.gender = { $regex: searchGender, $options: 'i' }
+  }
+  try {
+    let products = await Product.find(query)
+
+    const { sort } = req.query
+    if (sort == 'price-asc') {
+      const SortedProducts = products.sort((a, b) => {
+        return a.price - b.price
+      })
+      products = SortedProducts
+    } else if (sort == 'price-desc') {
+      const SortedProducts = products.sort((a, b) => {
+        return b.price - a.price
+      })
+      products = SortedProducts
+    }
+
+    res.status(200).json({ succes: true, data: products })
+  } catch (err) {
+    res.status(500).json({ succes: false, error: err })
+  }
+}
+
 module.exports = {
   getAllShoes,
   getCategoriesNames,
   getShoesInCategory,
   getPopularShoes,
   getShoeInfo,
+  Search,
 }
