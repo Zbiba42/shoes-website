@@ -15,7 +15,7 @@ const SignUp = async (req, res) => {
       Email: req.body.Email,
       Password: HashedPass,
       Cart: [],
-      Loved : []
+      Loved: [],
     }
     await User.create(user)
     res.status(200).json({ succes: true, data: user })
@@ -38,7 +38,7 @@ const LogIn = async (req, res) => {
       // res.status(200).json({ succes: true, data: 'user logged in' })
 
       //// authorisation
-      const { _id, Fullname, Cart, Email , Loved} = await User.findOne({
+      const { _id, Fullname, Cart, Email, Loved } = await User.findOne({
         Email: req.body.Email,
       })
       const store = await Store.findOne({ ownerId: _id })
@@ -47,7 +47,7 @@ const LogIn = async (req, res) => {
         Fullname: Fullname,
         Store: store,
         Cart: Cart,
-        Loved : Loved,
+        Loved: Loved,
         Email: Email,
       }
 
@@ -108,15 +108,13 @@ const RefreshToken = (req, res) => {
       }
     })
 
-    
-
     const newAccesToken = jwt.sign(
       {
         id: user.id,
         Fullname: user.Fullname,
         Store: user.Store,
         Cart: user.Cart,
-        Loved : Loved,
+        Loved: Loved,
         Email: user.Email,
       },
       process.env.ACCES_TOKEN_SECRET,
@@ -130,7 +128,7 @@ const RefreshToken = (req, res) => {
         Fullname: user.Fullname,
         Store: user.Store,
         Cart: user.Cart,
-        Loved : Loved,
+        Loved: Loved,
         Email: user.Email,
       },
       process.env.REFRESH_TOKEN_SECRET
@@ -152,7 +150,8 @@ const authToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
-  if (token == null) return res.status(400).json({ succes: false, error: 'token is null' })
+  if (token == null)
+    return res.status(400).json({ succes: false, error: 'token is null' })
 
   jwt.verify(token, process.env.ACCES_TOKEN_SECRET, (err, payload) => {
     if (err) return res.status(401).json({ succes: false, error: err })

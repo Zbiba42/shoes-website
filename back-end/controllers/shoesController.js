@@ -1,55 +1,38 @@
-const { readFileSync } = require('fs')
-const store = require('../models/store')
-
-const findAll = async () => {
-  const stores = await store.find()
-  const products = stores.map((store) => {
-    return store.products
-  })
-  return products.flat()
-}
+const Product = require('../models/product')
 
 const getAllShoes = async (req, res) => {
-  const Shoes = await findAll()
+  const Shoes = await Product.find()
   res.status(200).json({ succes: true, data: Shoes, error: '' })
 }
 
 const getCategoriesNames = async (req, res) => {
   try {
-    const Shoes = await findAll()
-    let results = []
-    Shoes.map((shoe) => {
-      if (results.includes(shoe.category) == false) {
-        results.push(shoe.category)
-      }
-    })
-    if (results.length >= 1) {
-      res.status(200).json({ succes: true, data: results, error: '' })
+    let categories = await Product.distinct('category')
+    if (categories.length >= 1) {
+      res.status(200).json({ succes: true, data: categories, error: '' })
     } else {
       res
         .status(200)
-        .json({ succes: false, data: results, error: 'category not found' })
+        .json({ succes: false, data: [], error: 'category not found' })
     }
   } catch (error) {
-    res.status(200).json({ succes: false, data: results, error: error })
+    res.status(200).json({ succes: false, data: [], error: error })
   }
 }
 
 const getShoesInCategory = async (req, res) => {
-  const Shoes = await findAll()
-  let category = req.params.category.toLowerCase()
+  let category = req.params.category.toUpperCase()
+  const Shoes = await Product.find({ category: category })
   const startIndex = parseInt(req.query.startIndex)
   const endIndex = parseInt(req.query.endIndex)
   const gender = req.query.gender.toLowerCase()
   let results = []
   let count = 0
   Shoes.map((shoe) => {
-    if (shoe.category.toLowerCase() == category) {
-      if (shoe.gender.toLowerCase() == gender || gender == 'all') {
-        count++
-        if (count > startIndex && count <= endIndex) {
-          results.push(shoe)
-        }
+    if (shoe.gender.toLowerCase() == gender || gender == 'all') {
+      count++
+      if (count > startIndex && count <= endIndex) {
+        results.push(shoe)
       }
     }
   })
@@ -63,92 +46,28 @@ const getShoesInCategory = async (req, res) => {
 }
 
 const getPopularShoes = async (req, res) => {
-  const Shoes = await findAll()
-  let results = []
-  for (let i = 0; i < 5; i++) {
-    let num = Math.floor(Math.random() * 33)
-    const shoe = Shoes[num]
-    results.push(shoe)
-  }
-  if (results.length >= 1) {
-    res.status(200).json({ succes: true, data: results, error: '' })
+  const Shoes = await Product.aggregate([{ $sample: { size: 5 } }])
+  if (Shoes.length >= 1) {
+    res.status(200).json({ succes: true, data: Shoes, error: '' })
   } else {
     res.status(200).json({
       succes: false,
-      data: results,
+      data: [],
       error: 'no popular shoes are available right now',
     })
   }
 }
 
 const getShoeInfo = async (req, res) => {
-  const Shoes = await findAll()
-  let name = req.params.name
-  let results
-  Shoes.map((shoe) => {
-    if (
-      shoe.name.toLocaleLowerCase().trim() == name.toLocaleLowerCase().trim()
-    ) {
-      results = shoe
-    }
-  })
-  if (results) {
-    res.status(200).json({ succes: true, data: results, error: '' })
+  let name = req.params.name.trim()
+  const Shoe = await Product.findOne({ name: name })
+  if (Shoe) {
+    res.status(200).json({ succes: true, data: Shoe, error: '' })
   } else {
     res.status(200).json({
       succes: false,
-      data: results,
+      data: [],
       error: 'no shoes found with that name',
-    })
-  }
-}
-
-const getShoesInBrand = async (req, res) => {
-  const Shoes = await findAll()
-  let brand = req.params.brand
-  let results = []
-  Shoes.map((shoe) => {
-    if (
-      shoe.brand
-        .toLocaleLowerCase()
-        .trim()
-        .includes(brand.toLocaleLowerCase().trim())
-    ) {
-      results.push(shoe)
-    }
-  })
-  if (results.length >= 1) {
-    res.status(200).json({ succes: true, data: results, error: '' })
-  } else {
-    res.status(200).json({
-      succes: false,
-      data: results,
-      error: 'no shoes found with that name',
-    })
-  }
-}
-
-const getShoesForGender = async (req, res) => {
-  const Shoes = await findAll()
-  let gender = req.params.gender
-  let results = []
-  Shoes.map((shoe) => {
-    if (
-      shoe.gender
-        .toLocaleLowerCase()
-        .trim()
-        .includes(gender.toLocaleLowerCase().trim())
-    ) {
-      results.push(shoe)
-    }
-  })
-  if (results.length >= 1) {
-    res.status(200).json({ succes: true, data: results, error: '' })
-  } else {
-    res.status(200).json({
-      succes: false,
-      data: results,
-      error: `no shoes found for ${gender.toLocaleLowerCase()}`,
     })
   }
 }
@@ -159,6 +78,4 @@ module.exports = {
   getShoesInCategory,
   getPopularShoes,
   getShoeInfo,
-  getShoesInBrand,
-  getShoesForGender,
 }
