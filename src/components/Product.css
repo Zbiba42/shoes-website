@@ -8,8 +8,10 @@
 }
 img{
     width: 50%;
+    height: 100%;
     margin-right: 10px;
     float: left;
+    object-fit:scale-down;
 }
 
 .brand{

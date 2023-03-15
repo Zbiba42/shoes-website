@@ -1,8 +1,8 @@
-.products{
+/* .products{
     margin: 2px 5% 0 0;
-    /* outline: 1px solid black ; */
+ 
     width: fit-content;
-    outline: 1px solid black;
+  
     
 }
 .products .h2{
@@ -24,14 +24,14 @@
     color: rgb(59, 59, 59);
 }
 .items{
-    /* outline: 1px solid black; */
+
     overflow: scroll;
     height: 427px;
     width: fit-content;
    
-}
+} */
 
-.items::-webkit-scrollbar {
+/* .items::-webkit-scrollbar {
     width: 2px;
 }
 
@@ -45,9 +45,9 @@
 
 .items::-webkit-scrollbar-thumb:hover {
     background: #555; 
-}
+} */
 
-.Button{
+/* .Button{
     width: 400px;
     border: none;
     font-weight: 700;
@@ -60,4 +60,4 @@
     background-color: rgb(0, 85, 0);
     color: white;
     cursor: pointer;
-}
+} */
