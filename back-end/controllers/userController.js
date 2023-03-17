@@ -21,6 +21,16 @@ const CreateStore = async (req, res) => {
   }
 }
 
+const getCart = async (req, res) => {
+  try {
+    const id = req.query.id
+    const { Cart } = await User.findOne({ id: id })
+    res.status(200).json({ succes: true, data: Cart })
+  } catch (error) {
+    res.status(400).json({ succes: true, error: error })
+  }
+}
+
 const addToCart = async (req, res) => {
   try {
     const id = req.body.id
@@ -46,6 +56,16 @@ const removeFromCart = async (req, res) => {
   }
 }
 
+const getFavorites = async (req, res) => {
+  try {
+    const id = req.query.id
+    const { Loved } = await User.findOne({ id: id })
+    res.status(200).json({ succes: true, data: Loved })
+  } catch (error) {
+    res.status(400).json({ succes: true, error: error })
+  }
+}
+
 const addToFav = async (req, res) => {
   try {
     const id = req.body.id
@@ -64,7 +84,7 @@ const removeFromFav = async (req, res) => {
     const { Loved } = await User.findOne({ id: UserId })
     const item = Loved.find((item) => item.name === Item.name)
     Loved.splice(Loved.indexOf(item), 1)
-    const response = await User.updateOne({ id: UserId }, { Loved : Loved })
+    const response = await User.updateOne({ id: UserId }, { Loved: Loved })
     res.status(200).json({ succes: true, data: Loved })
   } catch (error) {
     res.status(400).json({ succes: false, error: error })
@@ -113,8 +133,10 @@ const UpdateInfos = async (req, res) => {
 
 module.exports = {
   CreateStore,
+  getCart,
   addToCart,
   removeFromCart,
+  getFavorites,
   addToFav,
   removeFromFav,
   UploadStoreImg,

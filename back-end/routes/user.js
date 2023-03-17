@@ -5,8 +5,10 @@ const multer = require('multer')
 const { authToken } = require('../controllers/AuthenticationController')
 const {
   CreateStore,
+  getCart,
   addToCart,
   removeFromCart,
+  getFavorites,
   addToFav,
   removeFromFav,
   UploadStoreImg,
@@ -15,9 +17,13 @@ const {
 
 router.post('/createStore', authToken, CreateStore)
 
+router.get('/getCart', authToken, getCart)
+
 router.post('/addToCart', authToken, addToCart)
 
 router.post('/removeFromCart', authToken, removeFromCart)
+
+router.get('/getFavorites', authToken, getFavorites)
 
 router.post('/addToFav', authToken, addToFav)
 
