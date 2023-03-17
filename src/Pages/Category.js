@@ -15,8 +15,9 @@ export const Category = () => {
   const [endIndex, setendIndex] = useState(10)
   const GetProducts = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/Shoes/categories/${category}?startIndex=${startIndex}&endIndex=${endIndex}&gender=${gender.current.value}`
+      `http://localhost:5000/api/Shoes/categories/${category}?startIndex=${startIndex}&endIndex=${endIndex}&gender=${gender.current.value}&sort=${sortBy.current.value}`
     )
+    console.log(data.length)
     setProducts(data.data)
     setLength(data.length)
   }
@@ -25,17 +26,17 @@ export const Category = () => {
     setStartIndex(0)
     setendIndex(pagesize)
     GetProducts()
-    if (sortBy.current.value == 'price-asc') {
-      const SortedProducts = Products.sort((a, b) => {
-        return a.price - b.price
-      })
-      setProducts([...SortedProducts])
-    } else if (sortBy.current.value == 'price-desc') {
-      const SortedProducts = Products.sort((a, b) => {
-        return b.price - a.price
-      })
-      setProducts([...SortedProducts])
-    }
+    // if (sortBy.current.value == 'price-asc') {
+    //   const SortedProducts = Products.sort((a, b) => {
+    //     return a.price - b.price
+    //   })
+    //   setProducts([...SortedProducts])
+    // } else if (sortBy.current.value == 'price-desc') {
+    //   const SortedProducts = Products.sort((a, b) => {
+    //     return b.price - a.price
+    //   })
+    //   setProducts([...SortedProducts])
+    // }
   }
   const onGoNext = () => {
     setStartIndex(startIndex + parseInt(pageSize.current.value))

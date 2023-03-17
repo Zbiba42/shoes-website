@@ -38,6 +38,18 @@ const getShoesInCategory = async (req, res) => {
       }
     }
   })
+  const { sort } = req.query
+  if (sort == 'price-asc') {
+    const SortedProducts = results.sort((a, b) => {
+      return a.price - b.price
+    })
+    results = SortedProducts
+  } else if (sort == 'price-desc') {
+    const SortedProducts = results.sort((a, b) => {
+      return b.price - a.price
+    })
+    results = SortedProducts
+  }
   if (results.length >= 1) {
     res.status(200).json({ succes: true, data: results, length: count })
   } else {
