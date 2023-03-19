@@ -67,8 +67,8 @@ export default function App() {
   useEffect(() => {
     const accesToken = sessionStorage.getItem('AccesToken')
     if (accesToken) {
+      dispatch(setCart({ Cart: jwtDecode(accesToken).Cart }))
       dispatch(
-        setCart({ Cart: jwtDecode(accesToken).Cart }),
         setFavorites({
           Favorites: jwtDecode(accesToken).Loved,
         })

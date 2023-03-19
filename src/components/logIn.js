@@ -15,9 +15,7 @@ export default function LogIn() {
 
   const dispatch = useDispatch()
 
-
   const SignInHandler = async () => {
-  
     const user = {
       Email: Email.current.value,
       Password: Password.current.value,
@@ -33,12 +31,13 @@ export default function LogIn() {
         sessionStorage.setItem('RefreshToken', response.data.data.refreshToken)
 
         dispatch(
-          setCart({ Cart: jwtDecode(response.data.data.accesToken).Cart }),
           setFavorites({
             Favorites: jwtDecode(response.data.data.accesToken).Loved,
           })
         )
-
+        dispatch(
+          setCart({ Cart: jwtDecode(response.data.data.accesToken).Cart })
+        )
         setEffect('-80%')
         setTimeout(() => {
           setFormClicked(false)
