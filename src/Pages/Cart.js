@@ -33,7 +33,7 @@ export const Cart = () => {
     <>
       <div className="container">
         <OrderForm inputRefs={inputRefs} />
-        <div className="products">
+        <div className="products" style={{ float: 'right' }}>
           <h3 className="orders">Order Summary</h3>
           <div className="items">
             {Cart.length > 0 ? (

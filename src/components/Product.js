@@ -29,17 +29,17 @@ export const Product = ({ item }) => {
     }
   }
   return (
-    <Link
-      to={`/shoes/${item.name}`}
-      style={{ textDecoration: 'none', color: 'black' }}
-    >
-      <div className="product">
+    <div className="product">
+      <Link
+        to={`/shoes/${item.name}`}
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
         <img src={item.imageURL} alt="" />
         <h4 className="title">{item.name}</h4>
         <h5 className="brand">{item.brand}</h5>
         <h4 className="prix">${item.price}</h4>
-        <i class="fa-solid fa-trash-can delete" onClick={deleteFromCart}></i>
-      </div>
-    </Link>
+      </Link>
+      <i class="fa-solid fa-trash-can delete" onClick={deleteFromCart}></i>
+    </div>
   )
 }

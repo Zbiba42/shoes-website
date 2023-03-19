@@ -25,3 +25,10 @@ img{
    color: rgb(71, 71, 71);
    cursor: pointer;
 }
+.Add{
+    position: absolute;
+    right: 60px;
+    top: 45%;
+    color: rgb(71, 71, 71);
+    cursor: pointer;
+}
