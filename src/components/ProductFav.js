@@ -3,23 +3,23 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { setCart } from '../redux/Cart_Favorites'
+import { setCart, setFavorites } from '../redux/Cart_Favorites'
 import './Product.css'
-export const Product = ({ item }) => {
+export const ProductFav = ({ item }) => {
   const dispatch = useDispatch()
-  const deleteFromCart = async () => {
+  const deleteFromFav = async () => {
     try {
       const { id } = sessionStorage.getItem('AccesToken')
       const response = await axios.post(
-        'http://localhost:5000/api/user/removeFromCart',
+        'http://localhost:5000/api/user/removeFromFav',
         {
           id: id,
           item: item,
         }
       )
       console.log(response.data.data)
-      dispatch(setCart({ Cart: response.data.data }))
-      toast.success('item removed from cart successfully !', {
+      dispatch(setFavorites({ Favorites: response.data.data }))
+      toast.success('item removed from favorites successfully !', {
         position: 'top-center',
       })
     } catch (error) {
@@ -38,7 +38,7 @@ export const Product = ({ item }) => {
         <h4 className="title">{item.name}</h4>
         <h5 className="brand">{item.brand}</h5>
         <h4 className="prix">${item.price}</h4>
-        <i class="fa-solid fa-trash-can delete" onClick={deleteFromCart}></i>
+        <i class="fa-solid fa-trash-can delete" onClick={deleteFromFav}></i>
       </div>
     </Link>
   )
