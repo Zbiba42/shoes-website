@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Testing } from './Pages/testing'
 import { Store } from './Pages/Store'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Account } from './Pages/Account'
 import { Products } from './Pages/Products'
 import { Cart } from './Pages/Cart'
@@ -23,12 +23,14 @@ import { Favorites } from './Pages/Favorites'
 import { Categories } from './Pages/Categories'
 import { Category } from './Pages/Category'
 import { Search } from './Pages/Search'
+import jwtDecode from 'jwt-decode'
+import { setCart, setFavorites } from './redux/Cart_Favorites'
 export const Click = createContext(null)
 
 export default function App() {
   const [formClicked, setFormClicked] = useState(false)
   const StoreMode = useSelector((state) => state.StoreMode.storeMode)
-
+  const dispatch = useDispatch()
   axios.interceptors.request.use((config) => {
     const token = sessionStorage.getItem('AccesToken')
     config.headers['Authorization'] = `Bearer ${token}`
@@ -63,8 +65,16 @@ export default function App() {
     }
   )
   useEffect(() => {
-    console.log('render')
-  })
+    const accesToken = sessionStorage.getItem('AccesToken')
+    if (accesToken) {
+      dispatch(
+        setCart({ Cart: jwtDecode(accesToken).Cart }),
+        setFavorites({
+          Favorites: jwtDecode(accesToken).Loved,
+        })
+      )
+    }
+  }, [])
 
   return (
     <>
