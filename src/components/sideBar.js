@@ -1,16 +1,27 @@
 import React, { useContext } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import './sideBar.css'
 import { Click } from '../App'
 import { useDispatch } from 'react-redux'
 import { SetStoreMode } from '../redux/StoreSlice'
 import jwt_decode from 'jwt-decode'
+// import jwtDecode from 'jwt-decode'
 
 const SideBar = () => {
   const setFormClicked = useContext(Click)
   const token = sessionStorage.getItem('AccesToken')
+  // const navigateTo = useNavigate()
   const dispatch = useDispatch()
-
+  // if (token) {
+  //   if (jwtDecode(token).Store) {
+  //     dispatch(
+  //       SetStoreMode({
+  //         storeMode: 'seller',
+  //       })
+  //     )
+  //     navigateTo('/Products')
+  //   }
+  // }
   return (
     <>
       <div className="sideBar">

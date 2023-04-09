@@ -5,11 +5,13 @@ import { Click } from '../App'
 import { useDispatch } from 'react-redux'
 import { setCart, setFavorites } from '../redux/Cart_Favorites'
 import jwtDecode from 'jwt-decode'
+// import { SetStoreMode } from '../redux/StoreSlice'
+// import { useNavigate } from 'react-router'
 
 export default function LogIn() {
   const { setsignIn, setSignUp, setEffect } = useContext(loginToggleContext)
   const setFormClicked = useContext(Click)
-
+  // const navigateTo = useNavigate()
   const Email = useRef(null)
   const Password = useRef(null)
 
@@ -29,7 +31,14 @@ export default function LogIn() {
       if (response.data.succes) {
         sessionStorage.setItem('AccesToken', response.data.data.accesToken)
         sessionStorage.setItem('RefreshToken', response.data.data.refreshToken)
-
+        // if (jwtDecode(response.data.data.accesToken).Store) {
+        //   dispatch(
+        //     SetStoreMode({
+        //       storeMode: 'seller',
+        //     })
+        //   )
+        //   navigateTo('/Products')
+        // }
         dispatch(
           setFavorites({
             Favorites: jwtDecode(response.data.data.accesToken).Loved,
