@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 import './app.css'
 import Main from './Pages/main'
@@ -25,10 +25,14 @@ import { Category } from './Pages/Category'
 import { Search } from './Pages/Search'
 import jwtDecode from 'jwt-decode'
 import { setCart, setFavorites } from './redux/Cart_Favorites'
+import { SetStoreMode } from './redux/StoreSlice'
+import { AddProduct } from './Pages/AddProduct'
+import { UpdateShoe } from './Pages/UpdateShoe'
 export const Click = createContext(null)
 
 export default function App() {
   const [formClicked, setFormClicked] = useState(false)
+  const [Location, setLocation] = useState('http://localhost:3000/')
   const StoreMode = useSelector((state) => state.StoreMode.storeMode)
   const dispatch = useDispatch()
   axios.interceptors.request.use((config) => {
@@ -65,6 +69,7 @@ export default function App() {
     }
   )
   useEffect(() => {
+    setLocation(window.location.href)
     const accesToken = sessionStorage.getItem('AccesToken')
     if (accesToken) {
       dispatch(setCart({ Cart: jwtDecode(accesToken).Cart }))
@@ -75,6 +80,15 @@ export default function App() {
       )
     }
   }, [])
+  useEffect(() => {
+    if (Location == 'http://localhost:3000/Store') {
+      dispatch(
+        SetStoreMode({
+          storeMode: 'seller',
+        })
+      )
+    }
+  })
 
   return (
     <>
@@ -82,7 +96,7 @@ export default function App() {
         <Click.Provider value={setFormClicked}>
           <ToastContainer />
           {StoreMode === 'user' ? <SideBar /> : <SellerSideBar />}
-
+          {/* {Location == 'http://localhost:3000/Store' ? '' : <NavBar />} */}
           <NavBar />
           {/* <Link to={'/testing'}>TESTING</Link> */}
           <Routes>
@@ -98,6 +112,8 @@ export default function App() {
             <Route path="/Categories" element={<Categories />} />
             <Route path="/category/:category" element={<Category />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/Add" element={<AddProduct />} />
+            <Route path="/UpdateShoe/:Id" element={<UpdateShoe />} />
           </Routes>
           {formClicked && <Form />}
         </Click.Provider>
