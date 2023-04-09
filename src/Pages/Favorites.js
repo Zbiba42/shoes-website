@@ -55,7 +55,7 @@ export const Favorites = () => {
                 )
               })
             ) : (
-              <h2>No items availlable in your cart !</h2>
+              <h2>No items availlable in Favorites !</h2>
             )}
           </div>
           <h5 className="total">Subtotal</h5>
