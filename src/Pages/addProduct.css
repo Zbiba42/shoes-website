@@ -1,0 +1,57 @@
+/* Form Container */
+.form-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 20px;
+ 
+  border-radius: 5px;
+}
+
+/* Form Title */
+.form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Label */
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* .inputadd */
+.inputadd[type="text"],
+.inputadd[type="number"],
+.inputadd[type="checkbox"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Submit Button */
+.form-submit {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Submit Button Hover */
+.form-submit:hover {
+  background-color: #0056b3;
+}

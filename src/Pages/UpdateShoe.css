@@ -1,0 +1,47 @@
+.update-form {
+    float: left;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+
+    border-radius: 4px;
+  }
+  
+ 
+  
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+  }
+  
+  input[type="checkbox"] {
+    width: auto;
+    margin-top: 0;
+  }
+  
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
