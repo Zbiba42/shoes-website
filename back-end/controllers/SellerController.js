@@ -1,19 +1,17 @@
 const Product = require('../models/product')
 
+const getProducts = async (req, res) => {
+  try {
+    const StoreId = req.query.StoreId
+    const products = await Product.find({ StoreId: StoreId })
+    res.status(200).json({ succes: true, data: products })
+  } catch (error) {
+    res.status(400).json({ succes: true, error: error })
+  }
+}
+
 const addProduct = async (req, res) => {
   try {
-    //Product data
-    // id
-    // name
-    // brand
-    // gender
-    // category
-    // price
-    // is_in_inventory
-    // items_left
-    // imageURL
-
-    // const StoreId = req.body.id
     const item = req.body.item
     // const Storee = await Store.updateOne(
     //   { id: StoreId },
@@ -25,7 +23,30 @@ const addProduct = async (req, res) => {
     res.status(400).json({ succes: false, data: error.message })
   }
 }
-
+const UploadProductImg = async (req, res) => {
+  try {
+    const id = req.body.id
+    if (id) {
+      const product = await Product.updateOne(
+        await Product.findOne({ _id: id }),
+        {
+          imageURL: `./uploads/${req.file.filename}`,
+        }
+      )
+      res.status(200).json({ succes: true, data: product })
+    } else {
+      const product = await Product.updateOne(
+        await Product.findOne().sort({ _id: -1 }),
+        {
+          imageURL: `./uploads/${req.file.filename}`,
+        }
+      )
+      res.status(200).json({ succes: true, data: product })
+    }
+  } catch (error) {
+    res.status(400).json({ succes: true, data: error })
+  }
+}
 const updateProduct = async (req, res) => {
   try {
     // const StoreId = req.body.id
@@ -40,7 +61,19 @@ const updateProduct = async (req, res) => {
     res.status(400).json({ succes: false, data: error.message })
   }
 }
+const removeProduct = async (req, res) => {
+  try {
+    const { _id } = req.body.product
+    const product = await Product.findOneAndRemove({ _id: _id })
+    res.status(200).json({ succes: true, data: product })
+  } catch (error) {
+    res.status(401).json({ succes: false, error: error })
+  }
+}
 module.exports = {
   addProduct,
   updateProduct,
+  getProducts,
+  UploadProductImg,
+  removeProduct,
 }
