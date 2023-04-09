@@ -86,6 +86,20 @@ const getShoeInfo = async (req, res) => {
   }
 }
 
+const getShoeById = async (req, res) => {
+  let id = req.params.Id.trim()
+  const Shoe = await Product.findOne({ _id: id })
+  if (Shoe) {
+    res.status(200).json({ succes: true, data: Shoe, error: '' })
+  } else {
+    res.status(200).json({
+      succes: false,
+      data: [],
+      error: 'no shoes found with that name',
+    })
+  }
+}
+
 const Search = async (req, res) => {
   const { searchTerm, searchCategory, searchGender } = req.query
   let query = {}
@@ -128,4 +142,5 @@ module.exports = {
   getPopularShoes,
   getShoeInfo,
   Search,
+  getShoeById,
 }
